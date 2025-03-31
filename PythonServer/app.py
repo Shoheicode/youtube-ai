@@ -71,6 +71,29 @@ def upload_video():
 
     query = data["query"]
 
+    try:
+        youtube = get_youtube_service()
+        search_response = (
+            youtube.search()
+            .list(
+                q=query,
+                type="video",
+                part="id,snippet",
+                maxResults=5,
+                order="date",
+            )
+            .execute()
+        )
+
+        items = search_response["items"]
+        print("ITEMS", items)
+    except HttpError as e:
+        print("An error occurred:", e)
+        return jsonify({"error": "Failed to fetch video details"}), 500
+    except Exception as e:
+        print("An error occurred:", e)
+        return jsonify({"error": "An unexpected error occurred"}), 500
+
     print("Query received:", query)
     appearances = []
     a = {
