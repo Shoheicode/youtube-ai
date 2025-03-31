@@ -29,6 +29,7 @@ export default function Home() {
       }
       
       const data = await response.json();
+      console.log(data);
       setResults(data);
     } catch (err) {
       setError('Error fetching results: ' + err.message);

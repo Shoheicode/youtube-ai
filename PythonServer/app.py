@@ -22,7 +22,10 @@ def upload_video():
     query = data['query']
 
     print("Query received:", query)
-    return jsonify({"message": f"Query '{query}' received successfully!"})
+    appearances = []
+    appearances.append({"name": "test", "start": 0, "end": 10})
+    appearances.append({"name": "test2", "start": 10, "end": 20})
+    return jsonify({"appearances": appearances})
 
     # if "video" not in request.files:
     #     print("NOT WORKING")
