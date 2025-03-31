@@ -1,2 +1,4 @@
 youtube-transcript-api==0.6.1
 google-api-python-client
+flask 
+flask-cors
