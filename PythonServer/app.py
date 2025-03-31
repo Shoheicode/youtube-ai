@@ -1,3 +1,4 @@
+import random
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
@@ -8,6 +9,40 @@ CORS(app)  # Allow cross-origin requests from frontend
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+
+def generate_simulated_highlights(video_id):
+    # In a real application, these would be generated based on actual video content analysis
+    simulated_highlights = [
+        {
+            "startTime": 120,  # 2 minutes in
+            "endTime": 140,    # 20 second clip
+            "text": "Discussing current market conditions and their impact on investment strategies."
+        },
+        {
+            "startTime": 360,  # 6 minutes in
+            "endTime": 380,    # 20 second clip
+            "text": "Explaining the concept of risk assessment in today's economic environment."
+        },
+        {
+            "startTime": 780,  # 13 minutes in
+            "endTime": 800,    # 20 second clip
+            "text": "Sharing personal insights on successful long-term investment approaches."
+        },
+        {
+            "startTime": 1200,  # 20 minutes in
+            "endTime": 1220,    # 20 second clip
+            "text": "Answering questions about emerging market opportunities and potential risks."
+        },
+        {
+            "startTime": 1800,  # 30 minutes in
+            "endTime": 1820,    # 20 second clip
+            "text": "Concluding with key takeaways for investors to consider in the coming months."
+        },
+    ]
+    
+    # Return a subset of the highlights (random number between 3 and 5)
+    num_highlights = random.randint(3, 5)
+    return simulated_highlights[:num_highlights]
 
 
 @app.route("/upload", methods=["POST"])
