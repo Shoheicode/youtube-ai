@@ -64,6 +64,7 @@ def generate_simulated_highlights(video_id):
 def upload_video():
     data = request.get_json()
     print(data)
+    appearances = []
 
     # Check if the request contains JSON data
     if not data or "query" not in data or not data["query"]:
@@ -86,6 +87,33 @@ def upload_video():
         )
 
         items = search_response["items"]
+        for item in items:
+            video_id = item["id"]["videoId"]
+            video_response = (
+                youtube.videos()
+                .list(
+                    part="snippet,contentDetails",
+                    id=video_id,
+                )
+                .execute()
+            )
+
+            if not video_response["items"]:
+                print(f"No details found for video ID: {video_id}")
+                continue
+
+            video_details = video_response["items"][0]
+
+            appearances.append(
+                {
+                    "videoId": video_id,
+                    "title": video_details["snippet"]["title"],
+                    "channelTitle": video_details["snippet"]["channelTitle"],
+                    "publishedAt": video_details["snippet"]["publishedAt"],
+                    "highlights": generate_simulated_highlights(video_id),
+                }
+            )
+        return jsonify({"appearances": appearances})
         print("ITEMS", items)
     except HttpError as e:
         print("An error occurred:", e)
@@ -93,32 +121,6 @@ def upload_video():
     except Exception as e:
         print("An error occurred:", e)
         return jsonify({"error": "An unexpected error occurred"}), 500
-
-    print("Query received:", query)
-    appearances = []
-    a = {
-        "videoId": query,
-        "title": "Sample Video Title",
-        "channelTitle": "Sample Channel",
-        "publishedAt": "url",
-        "highlights": generate_simulated_highlights("video_id"),
-    }
-    appearances.append(a)
-    print("APPEARENCES", appearances)
-    return jsonify({"appearances": appearances})
-
-    # if "video" not in request.files:
-    #     print("NOT WORKING")
-    #     return jsonify({"error": "No video file provided"}), 400
-
-    # video = request.files["video"]
-    # filename = video.filename
-    # filepath = os.path.join(UPLOAD_FOLDER, filename)
-    # video.save(filepath)
-
-    # print("Video saved to:", filepath)
-
-    # return jsonify({"message": f'Video "{filename}" uploaded successfully!'})
 
 
 if __name__ == "__main__":
