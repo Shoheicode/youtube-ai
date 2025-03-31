@@ -20,4 +20,6 @@ def upload_video():
     filepath = os.path.join(UPLOAD_FOLDER, filename)
     video.save(filepath)
 
+    print("Video saved to:", filepath)
+
     return jsonify({"message": f'Video "{filename}" uploaded successfully!'})

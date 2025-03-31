@@ -39,3 +39,4 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+PythonServer/__pycache__/app.cpython-38.pyc
