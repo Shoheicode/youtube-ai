@@ -15,7 +15,7 @@ export default function Home() {
     setError('');
     
     try {
-      const response = await fetch('/api/search', {
+      const response = await fetch('http://localhost:8000/upload', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

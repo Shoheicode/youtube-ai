@@ -13,6 +13,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 @app.route("/upload", methods=["POST"])
 def upload_video():
     if "video" not in request.files:
+        print("NOT WORKING")
         return jsonify({"error": "No video file provided"}), 400
 
     video = request.files["video"]
@@ -23,3 +24,6 @@ def upload_video():
     print("Video saved to:", filepath)
 
     return jsonify({"message": f'Video "{filename}" uploaded successfully!'})
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=8000)
