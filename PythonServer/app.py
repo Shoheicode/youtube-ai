@@ -3,8 +3,16 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from dotenv import load_dotenv
 
 import os
+
+load_dotenv()
+
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
+if not YOUTUBE_API_KEY:
+    raise ValueError("YOUTUBE_API_KEY environment variable not set.")
+
 
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests from frontend
