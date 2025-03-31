@@ -21,18 +21,21 @@ def upload_video():
 
     query = data['query']
 
-    if "video" not in request.files:
-        print("NOT WORKING")
-        return jsonify({"error": "No video file provided"}), 400
+    print("Query received:", query)
+    return jsonify({"message": f"Query '{query}' received successfully!"})
 
-    video = request.files["video"]
-    filename = video.filename
-    filepath = os.path.join(UPLOAD_FOLDER, filename)
-    video.save(filepath)
+    # if "video" not in request.files:
+    #     print("NOT WORKING")
+    #     return jsonify({"error": "No video file provided"}), 400
 
-    print("Video saved to:", filepath)
+    # video = request.files["video"]
+    # filename = video.filename
+    # filepath = os.path.join(UPLOAD_FOLDER, filename)
+    # video.save(filepath)
 
-    return jsonify({"message": f'Video "{filename}" uploaded successfully!'})
+    # print("Video saved to:", filepath)
+
+    # return jsonify({"message": f'Video "{filename}" uploaded successfully!'})
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=8000)
