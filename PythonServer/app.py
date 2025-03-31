@@ -12,6 +12,13 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
 @app.route("/upload", methods=["POST"])
 def upload_video():
+    data = request.get_json()
+    print(data)
+
+    # Check if the request contains JSON data
+    if not data or 'query' not in data or not data['query']:
+        return jsonify({"error": "Query is required"}), 400
+
     if "video" not in request.files:
         print("NOT WORKING")
         return jsonify({"error": "No video file provided"}), 400
