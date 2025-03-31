@@ -22,6 +22,7 @@ export default function Home() {
         },
         body: JSON.stringify({ query }),
       });
+      console.log(response);
       
       if (!response.ok) {
         throw new Error('Failed to fetch results');
