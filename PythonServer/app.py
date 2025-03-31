@@ -9,13 +9,17 @@ import os
 
 load_dotenv()
 
-YOUTUBE_API_KEY = os.getenv("YOUTUBE_API_KEY")
+YOUTUBE_API_KEY = os.getenv("YOUTUBE_DATA_API_KEY")
 if not YOUTUBE_API_KEY:
     raise ValueError("YOUTUBE_API_KEY environment variable not set.")
 
-
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests from frontend
+
+
+def get_youtube_service():
+    return build("youtube", "v3", developerKey=YOUTUBE_API_KEY)
+
 
 UPLOAD_FOLDER = "uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
