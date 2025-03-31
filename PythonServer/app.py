@@ -58,9 +58,15 @@ def upload_video():
 
     print("Query received:", query)
     appearances = []
-    appearances.append({"name": "test", "start": 0, "end": 10, "highlights": generate_simulated_highlights("video_id")})
-    appearances.append({"name": "test2", "start": 10, "end": 20, "highlights": generate_simulated_highlights("video_id")})
-    appearances.append({"name": "test3", "start": 20, "end": 30, "highlights": generate_simulated_highlights("video_id")})
+    a = {
+                "videoId": query,
+                "title": "Sample Video Title",
+                "channelTitle": "Sample Channel",
+                "publishedAt": "url",
+                "highlights": generate_simulated_highlights("video_id"),
+    }
+    appearances.append(a)
+    print("APPEARENCES", appearances)
     return jsonify({"appearances": appearances})
 
     # if "video" not in request.files:
