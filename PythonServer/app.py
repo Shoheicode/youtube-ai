@@ -19,6 +19,8 @@ def upload_video():
     if not data or 'query' not in data or not data['query']:
         return jsonify({"error": "Query is required"}), 400
 
+    query = data['query']
+
     if "video" not in request.files:
         print("NOT WORKING")
         return jsonify({"error": "No video file provided"}), 400
