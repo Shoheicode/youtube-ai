@@ -97,13 +97,18 @@ def upload_video():
             .execute()
         )
 
+        if not search_response["items"]:
+            print("No videos found matching the search criteria.")
+            return []
+
         items = search_response["items"]
+
         for item in items:
             video_id = item["id"]["videoId"]
             video_response = (
                 youtube.videos()
                 .list(
-                    part="snippet,contentDetails",
+                    part="snippet,contentDetails,statistics",
                     id=video_id,
                 )
                 .execute()
