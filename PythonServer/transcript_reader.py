@@ -3,18 +3,18 @@ from youtube_transcript_api import YouTubeTranscriptApi
 
 video_id = "J9mfhqHK3hE"
 
-transcript = YouTubeTranscriptApi.get_transcript(video_id)
+# transcript = YouTubeTranscriptApi.get_transcript(video_id)
 
-full_transcript = "".join([t["text"] for t in transcript])
+# full_transcript = "".join([t["text"] for t in transcript])
 
-print(full_transcript)
+# print(full_transcript)
 
 # Add to requirements.txt: openai==0.28.1
 
 import openai
 
 # Make sure to add OPENAI_API_KEY to your .env file
-openai.api_key = os.getenv("OPENAI_API_KEY")
+openai.api_key = os.getenv("CHATGPT_API_KEY")
 
 
 def extract_highlights_with_openai(transcript, person_name, num_highlights=5):
@@ -49,3 +49,36 @@ def extract_highlights_with_openai(transcript, person_name, num_highlights=5):
     except Exception as e:
         print(f"Error using OpenAI for highlight extraction: {e}")
         return []
+
+
+def format_transcript_for_analysis(transcript_list):
+    if not transcript_list:
+        return ""
+    # Convert the transcript list into a single string for analysis
+    formatted_transcript = ""
+    for entry in transcript_list:
+        formatted_transcript += f"{entry['start']} - {entry['text']} "
+    return formatted_transcript
+
+
+# Get video transcript
+try:
+    transcript_list = YouTubeTranscriptApi.get_transcript(video_id)
+except Exception as e:
+    print(f"Error fetching transcript: {e}")
+    transcript_list = None
+
+# Process transcript and extract highlights
+highlights = None
+
+if transcript_list:
+    # Format transcript for OpenAI
+    formatted_transcript = format_transcript_for_analysis(transcript_list)
+
+    # Try to extract highlights with OpenAI
+    if OPENAI_API_KEY:
+        highlights = extract_highlights_with_openai(
+            formatted_transcript,
+            query.split(",")[0],  # Use just the name part
+            num_highlights=3,
+        )
