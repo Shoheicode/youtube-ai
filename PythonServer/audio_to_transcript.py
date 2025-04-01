@@ -1,5 +1,6 @@
 import whisper
 import subprocess
+import time
 
 # Load model (options: tiny, base, small, medium, large)
 # model = whisper.load_model("medium")
@@ -49,7 +50,26 @@ def convert_to_wav(mp3_path, wav_path):
 # Generate transcript with timestamps
 audio_file = "audio1.mp3"
 path = f"PythonServer/downloads/{audio_file}"
-convert_to_wav(path, "PythonServer/wav/audio1.wav")
+wav_path = "PythonServer/wav/audio1.wav"
+convert_to_wav(path, wav_path)
 
-# print(audio_to_transcript(path))
+print("FOR mp3")
+start_time = time.time()
+
+print(audio_to_transcript(path))
+
+end_time = time.time()
+
+elapsed_time = end_time - start_time
+print(f"Transcription took {elapsed_time:.2f} seconds")
+
+print("FOR WAV")
+start_time = time.time()
+
+print(audio_to_transcript(wav_path))
+
+end_time = time.time()
+
+elapsed_time = end_time - start_time
+print(f"Transcription took {elapsed_time:.2f} seconds")
 # result = model.transcribe(f"PythonServer/downloads/{audio_file}", word_timestamps=True)
