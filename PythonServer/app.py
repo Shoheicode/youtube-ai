@@ -10,7 +10,7 @@ import os
 
 import openai
 
-from PythonServer.transcript_reader import (
+from transcript_reader import (
     extract_highlights_with_openai,
     format_transcript_for_analysis,
 )

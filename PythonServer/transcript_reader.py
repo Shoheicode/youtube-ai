@@ -18,10 +18,10 @@ video_id = "J9mfhqHK3hE"
 
 import openai
 
-load_dotenv()
-# Make sure to add OPENAI_API_KEY to your .env file
-OPEN_AI_KEY = os.getenv("OPENAI_API_KEY")
-openai.api_key = OPEN_AI_KEY
+# load_dotenv()
+# # Make sure to add OPENAI_API_KEY to your .env file
+# OPEN_AI_KEY = os.getenv("OPENAI_API_KEY")
+# openai.api_key = OPEN_AI_KEY
 
 
 def extract_highlights_with_openai(transcript_text, person_name, num_highlights=5):
@@ -131,37 +131,37 @@ def format_transcript_for_analysis(transcript_list):
     return formatted_transcript
 
 
-# Get video transcript
-try:
-    transcript_list = YouTubeTranscriptApi.get_transcript(video_id)
-except Exception as e:
-    print(f"Error fetching transcript: {e}")
-    transcript_list = None
+# # Get video transcript
+# try:
+#     transcript_list = YouTubeTranscriptApi.get_transcript(video_id)
+# except Exception as e:
+#     print(f"Error fetching transcript: {e}")
+#     transcript_list = None
 
-# Process transcript and extract highlights
-highlights = None
+# # Process transcript and extract highlights
+# highlights = None
 
-if transcript_list:
-    appearances = []
-    # Format transcript for OpenAI
-    formatted_transcript = format_transcript_for_analysis(transcript_list)
-    print(formatted_transcript)
+# if transcript_list:
+#     appearances = []
+#     # Format transcript for OpenAI
+#     formatted_transcript = format_transcript_for_analysis(transcript_list)
+#     print(formatted_transcript)
 
-    name = "Jimmy Butler"  # Example name, replace with actual name from query
+#     name = "Jimmy Butler"  # Example name, replace with actual name from query
 
-    # Try to extract highlights with OpenAI
-    if OPEN_AI_KEY:
-        highlights = extract_highlights_with_openai(
-            formatted_transcript,
-            name,  # Use just the name part
-            num_highlights=5,
-        )
-    if not highlights:
-        highlights = []
+#     # Try to extract highlights with OpenAI
+#     if OPEN_AI_KEY:
+#         highlights = extract_highlights_with_openai(
+#             formatted_transcript,
+#             name,  # Use just the name part
+#             num_highlights=5,
+#         )
+#     if not highlights:
+#         highlights = []
 
-    appearances.append(
-        {
-            "videoId": video_id,
-            "highlights": highlights,
-        }
-    )
+#     appearances.append(
+#         {
+#             "videoId": video_id,
+#             "highlights": highlights,
+#         }
+#     )
