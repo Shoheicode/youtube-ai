@@ -4,7 +4,8 @@ import whisper
 model = whisper.load_model("medium")
 
 # Generate transcript with timestamps
-result = model.transcribe("audio_file.mp3", word_timestamps=True)
+audio_file = "A Minecraft Movie ｜ Final Trailer"
+result = model.transcribe(f"PythonServer/downloads/{audio_file}", word_timestamps=True)
 
 
 def format_time(seconds):
