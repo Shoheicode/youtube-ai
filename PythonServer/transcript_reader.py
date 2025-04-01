@@ -68,7 +68,7 @@ def extract_highlights_with_openai(transcript_text, person_name, num_highlights=
             temperature=0.7,
         )
         content = response.choices[0].message.content.strip()
-        print("RESPONSE", content)
+        # print("RESPONSE", content)
 
         def fix_gpt_json(text):
             # Replace single quotes with double quotes

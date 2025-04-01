@@ -90,8 +90,9 @@ def upload_video():
                 q=query,
                 type="video",
                 part="id,snippet",
-                maxResults=5,
+                maxResults=2,
                 order="date",
+                videoDuration="medium",
             )
             .execute()
         )
@@ -124,23 +125,22 @@ def upload_video():
             highlights = None
 
             if transcript_list:
+                print("video id", video_id)
                 # Format transcript for OpenAI
                 formatted_transcript = format_transcript_for_analysis(transcript_list)
-                print(formatted_transcript)
+                # print(formatted_transcript)
 
-                name = (
-                    "Jimmy Butler"  # Example name, replace with actual name from query
-                )
+                name = query  # Example name, replace with actual name from query
 
                 # Try to extract highlights with OpenAI
                 if OPEN_AI_KEY:
                     highlights = extract_highlights_with_openai(
                         formatted_transcript,
                         name,  # Use just the name part
-                        num_highlights=5,
+                        num_highlights=2,
                     )
-                if not highlights:
-                    highlights = []
+            if not highlights:
+                highlights = []
 
             appearances.append(
                 {
