@@ -4,10 +4,16 @@ from flask_cors import CORS
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from dotenv import load_dotenv
+from youtube_transcript_api import YouTubeTranscriptApi
 
 import os
 
 import openai
+
+from PythonServer.transcript_reader import (
+    extract_highlights_with_openai,
+    format_transcript_for_analysis,
+)
 
 load_dotenv()
 
