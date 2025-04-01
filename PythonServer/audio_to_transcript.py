@@ -37,7 +37,6 @@ def audio_to_transcript(audio_file):
         # print(f"[{format_time(start_time)} --> {format_time(end_time)}] {text}")
 
     # Extract and return the transcript
-    print(output_string)
     return output_string
 
 
