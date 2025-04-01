@@ -3,10 +3,6 @@ import whisper
 # Load model (options: tiny, base, small, medium, large)
 model = whisper.load_model("medium")
 
-# Generate transcript with timestamps
-audio_file = "audio1.mp3"
-result = model.transcribe(f"PythonServer/downloads/{audio_file}", word_timestamps=True)
-
 
 def format_time(seconds):
     minutes, seconds = divmod(seconds, 60)
@@ -28,7 +24,7 @@ def audio_to_transcript(audio_file):
     model = whisper.load_model("medium")
 
     # Transcribe the audio file
-    result = model.transcribe(audio_file)
+    result = model.transcribe(audio_file, word_timestamps=True)
 
     output_string = ""
 
@@ -43,3 +39,10 @@ def audio_to_transcript(audio_file):
     # Extract and return the transcript
     print(output_string)
     return output_string
+
+
+# Generate transcript with timestamps
+audio_file = "audio1.mp3"
+path = f"PythonServer/downloads/{audio_file}"
+print(audio_to_transcript(path))
+# result = model.transcribe(f"PythonServer/downloads/{audio_file}", word_timestamps=True)
