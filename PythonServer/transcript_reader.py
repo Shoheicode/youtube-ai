@@ -25,6 +25,8 @@ openai.api_key = OPEN_AI_KEY
 
 
 def extract_highlights_with_openai(transcript_text, person_name, num_highlights=5):
+    OPEN_AI_KEY = os.getenv("OPENAI_API_KEY")
+    openai.api_key = OPEN_AI_KEY
     try:
         # Limit transcript length to avoid token limits
         truncated_transcript = (
@@ -104,6 +106,8 @@ def extract_highlights_with_openai(transcript_text, person_name, num_highlights=
                 highlights.append(
                     {
                         "startTime": total_seconds,
+                        "endTime": total_seconds
+                        + 20,  # Assuming each highlight is 20 seconds
                         "text": highlight["summary"],
                     }
                 )

@@ -148,7 +148,7 @@ def upload_video():
                     "title": video_details["snippet"]["title"],
                     "channelTitle": video_details["snippet"]["channelTitle"],
                     "publishedAt": video_details["snippet"]["publishedAt"],
-                    "highlights": generate_simulated_highlights(video_id),
+                    "highlights": highlights,
                 }
             )
         return jsonify({"appearances": appearances})
