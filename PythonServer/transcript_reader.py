@@ -79,7 +79,7 @@ def extract_highlights_with_openai(transcript_text, person_name, num_highlights=
 
         # Extract JSON from the response (in case there's additional text)
         json_match = re.search(r"\[.*\]", content, re.DOTALL)
-        print(json_match)
+        # print(json_match)
         if json_match:
             # print("HEYKJKJKJ")
             json_str = json_match.group(0)
@@ -89,10 +89,10 @@ def extract_highlights_with_openai(transcript_text, person_name, num_highlights=
             # print("CLEANED JSON", cleaned_json_str)
             highlights_data = json.loads(cleaned_json_str)
         else:
-            print("NO MATCH")
+            # print("NO MATCH")
             # Try to parse the entire response as JSON
             highlights_data = json.loads(content)
-        print("EAAAAAAAAAAAA")
+        # print("EAAAAAAAAAAAA")
         # print("CONTENT", content)
         # print("HIGHLIGHTS DATA", highlights_data)
         highlights = []
@@ -111,7 +111,7 @@ def extract_highlights_with_openai(transcript_text, person_name, num_highlights=
                         "text": highlight["summary"],
                     }
                 )
-        print("HIGHLIGHTS", highlights)
+        # print("HIGHLIGHTS", highlights)
         return highlights  # Limit to num_highlights
 
     except Exception as e:

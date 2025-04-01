@@ -73,7 +73,7 @@ def generate_simulated_highlights(video_id):
 @app.route("/upload", methods=["POST"])
 def upload_video():
     data = request.get_json()
-    print(data)
+    # print(data)
     appearances = []
 
     # Check if the request contains JSON data
@@ -130,12 +130,15 @@ def upload_video():
             highlights = None
 
             if transcript_list:
-                print("video id", video_id)
+                # print("video id", video_id)
                 # Format transcript for OpenAI
                 formatted_transcript = format_transcript_for_analysis(transcript_list)
                 # print(formatted_transcript)
 
-                name = query  # Example name, replace with actual name from query
+                name = query.split(",")[
+                    0
+                ]  # Example name, replace with actual name from query
+                # print(name)
 
                 # Try to extract highlights with OpenAI
                 if OPEN_AI_KEY:
@@ -156,7 +159,7 @@ def upload_video():
                     "highlights": highlights,
                 }
             )
-        return jsonify({"appearances": appearances})
+        return jsonify({"query": query, "appearances": appearances})
         print("ITEMS", items)
     except HttpError as e:
         print("An error occurred:", e)
