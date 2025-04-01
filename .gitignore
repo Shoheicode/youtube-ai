@@ -41,3 +41,4 @@ yarn-error.log*
 next-env.d.ts
 PythonServer/__pycache__/
 PythonServer/downloads/
+PythonServer/wav/
