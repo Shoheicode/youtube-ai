@@ -90,7 +90,7 @@ def upload_video():
                 q=query,
                 type="video",
                 part="id,snippet",
-                maxResults=2,
+                maxResults=5,
                 order="date",
                 videoDuration="medium",
             )
@@ -137,7 +137,7 @@ def upload_video():
                     highlights = extract_highlights_with_openai(
                         formatted_transcript,
                         name,  # Use just the name part
-                        num_highlights=2,
+                        num_highlights=5,
                     )
             if not highlights:
                 highlights = []
