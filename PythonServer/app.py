@@ -93,6 +93,8 @@ def upload_video():
                 maxResults=5,
                 order="date",
                 videoDuration="medium",
+                relevanceLanguage="en",
+                regionCode="US",
             )
             .execute()
         )
