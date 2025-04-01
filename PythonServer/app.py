@@ -7,11 +7,15 @@ from dotenv import load_dotenv
 
 import os
 
+import openai
+
 load_dotenv()
 
 YOUTUBE_API_KEY = os.getenv("YOUTUBE_DATA_API_KEY")
 if not YOUTUBE_API_KEY:
     raise ValueError("YOUTUBE_API_KEY environment variable not set.")
+OPEN_AI_KEY = os.getenv("OPENAI_API_KEY")
+openai.api_key = OPEN_AI_KEY
 
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests from frontend
@@ -103,6 +107,34 @@ def upload_video():
                 continue
 
             video_details = video_response["items"][0]
+            # Get video transcript
+            try:
+                transcript_list = YouTubeTranscriptApi.get_transcript(video_id)
+            except Exception as e:
+                print(f"Error fetching transcript: {e}")
+                transcript_list = None
+
+            # Process transcript and extract highlights
+            highlights = None
+
+            if transcript_list:
+                # Format transcript for OpenAI
+                formatted_transcript = format_transcript_for_analysis(transcript_list)
+                print(formatted_transcript)
+
+                name = (
+                    "Jimmy Butler"  # Example name, replace with actual name from query
+                )
+
+                # Try to extract highlights with OpenAI
+                if OPEN_AI_KEY:
+                    highlights = extract_highlights_with_openai(
+                        formatted_transcript,
+                        name,  # Use just the name part
+                        num_highlights=5,
+                    )
+                if not highlights:
+                    highlights = []
 
             appearances.append(
                 {
