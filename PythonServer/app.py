@@ -138,7 +138,6 @@ def upload_video():
                 name = query.split(",")[
                     0
                 ]  # Example name, replace with actual name from query
-                # print(name)
 
                 # Try to extract highlights with OpenAI
                 if OPEN_AI_KEY:
