@@ -39,6 +39,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-PythonServer/__pycache__/app.cpython-38.pyc
-PythonServer/__pycache__/transcript_reader.cpython-312.pyc
+PythonServer/__pycache__/
 PythonServer/downloads/
