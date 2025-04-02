@@ -118,6 +118,8 @@ def upload_video():
             # Process transcript and extract highlights
             highlights = None
 
+            transcript_list = None
+
             # If transcript_list is not None, process it
             if transcript_list:
                 # Format transcript for OpenAI
@@ -142,6 +144,7 @@ def upload_video():
                 )
                 path = f"PythonServer/downloads/{file_name}"
                 transcript = audio_to_transcript_fast_whisper(path)
+                print(transcript)
                 if OPEN_AI_KEY:
                     highlights = extract_highlights_with_openai(
                         transcript,

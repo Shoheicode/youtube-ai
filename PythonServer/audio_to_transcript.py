@@ -84,10 +84,12 @@ def convert_to_wav(mp3_path, wav_path):
     return None
 
 
-# Generate transcript with timestamps
-audio_file = "audio1.mp3"
-path = f"PythonServer/downloads/{audio_file}"
-wav_path = "PythonServer/wav/audio1.wav"
+# TEST CODE:
+
+# # Generate transcript with timestamps
+# audio_file = "audio1.mp3"
+# path = f"PythonServer/downloads/{audio_file}"
+# wav_path = "PythonServer/wav/audio1.wav"
 # convert_to_wav(path, wav_path)
 
 # print("WHISPER")
@@ -100,13 +102,13 @@ wav_path = "PythonServer/wav/audio1.wav"
 # elapsed_time = end_time - start_time
 # print(f"Transcription took {elapsed_time:.2f} seconds")
 
-print("FAST WHISPER")
-start_time = time.time()
+# print("FAST WHISPER")
+# start_time = time.time()
 
-print(audio_to_transcript_fast_whisper(path))
+# print(audio_to_transcript_fast_whisper(path))
 
-end_time = time.time()
+# end_time = time.time()
 
-elapsed_time = end_time - start_time
-print(f"Transcription took {elapsed_time:.2f} seconds")
+# elapsed_time = end_time - start_time
+# print(f"Transcription took {elapsed_time:.2f} seconds")
 # result = model.transcribe(f"PythonServer/downloads/{audio_file}", word_timestamps=True)
