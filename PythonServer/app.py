@@ -89,6 +89,7 @@ def upload_video():
             return jsonify({"error": "An unexpected error occurred"}), 500
 
         # STEP 3: Get video details and transcript
+        i = 1
         for item in filteredList:
             video_id = item["id"]["videoId"]
             video_response = (
@@ -139,8 +140,9 @@ def upload_video():
                     )
             else:
                 video_url = f"https://www.youtube.com/watch?v={video_id}"
+                na = name + str(i)
                 file_name = download_audio(
-                    video_url, output_path="PythonServer/downloads"
+                    video_url, output_path="PythonServer/downloads", filename=na
                 )
                 path = f"PythonServer/downloads/{file_name}"
                 transcript = audio_to_transcript_fast_whisper(path)
@@ -164,6 +166,7 @@ def upload_video():
                     "highlights": highlights,
                 }
             )
+            i += 1
         return jsonify({"query": query, "appearances": appearances})
     except HttpError as e:
         print("An error occurred:", e)

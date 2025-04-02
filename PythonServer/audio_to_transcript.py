@@ -71,7 +71,6 @@ def audio_to_transcript_fast_whisper(audio_file):
         end_time = segment.end
         text = segment.text
         start_time = str(timedelta(seconds=int(start_time)))
-        print(start_time)
         output_string += f"{start_time}: {text}\n"
         # print(f"[{format_time(start_time)} --> {format_time(end_time)}] {text}")
 
