@@ -138,6 +138,12 @@ def upload_video():
                 )
                 path = f"PythonServer/downloads/{file_name}"
                 transcript = audio_to_transcript_fast_whisper(path)
+                if OPEN_AI_KEY:
+                    highlights = extract_highlights_with_openai(
+                        transcript,
+                        name,  # Use just the name part
+                        num_highlights=5,
+                    )
 
             if not highlights:
                 highlights = []
