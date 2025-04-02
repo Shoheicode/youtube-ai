@@ -38,7 +38,6 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 @app.route("/upload", methods=["POST"])
 def upload_video():
     data = request.get_json()
-    # print(data)
     appearances = []
 
     # Check if the request contains JSON data

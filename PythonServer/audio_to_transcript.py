@@ -60,12 +60,12 @@ def audio_to_transcript_fast_whisper(audio_file):
     model = WhisperModel(model_size, compute_type="int8", device="cpu")
 
     # Transcribe the audio file
-    result = model.transcribe(audio_file, word_timestamps=True)
+    result, info = model.transcribe(audio_file, word_timestamps=True)
 
     output_string = ""
 
     # Access segments with timestamps
-    for segment in result["segments"]:
+    for segment in result:
         start_time = segment["start"]
         end_time = segment["end"]
         text = segment["text"]
