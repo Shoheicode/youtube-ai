@@ -88,6 +88,7 @@ def upload_video():
             print("No videos found matching the name in the title.")
             return jsonify({"error": "An unexpected error occurred"}), 500
 
+        # STEP 3: Get video details and transcript
         for item in filteredList:
             video_id = item["id"]["videoId"]
             video_response = (
@@ -98,6 +99,7 @@ def upload_video():
                 )
                 .execute()
             )
+            # Check if video details were found
             if not video_response["items"]:
                 print(f"No details found for video ID: {video_id}")
                 return jsonify({"error": "An unexpected error occurred"}), 500
