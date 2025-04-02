@@ -104,6 +104,7 @@ def upload_video():
                 print(f"No details found for video ID: {video_id}")
                 return jsonify({"error": "An unexpected error occurred"}), 500
 
+            # Get video details
             video_details = video_response["items"][0]
 
             # Get video transcript
@@ -117,6 +118,7 @@ def upload_video():
             # Process transcript and extract highlights
             highlights = None
 
+            # If transcript_list is not None, process it
             if transcript_list:
                 # Format transcript for OpenAI
                 formatted_transcript = format_transcript_for_analysis(transcript_list)
