@@ -1,3 +1,4 @@
+from datetime import timedelta
 from faster_whisper import WhisperModel
 import whisper
 import subprocess
@@ -69,7 +70,9 @@ def audio_to_transcript_fast_whisper(audio_file):
         start_time = segment.start
         end_time = segment.end
         text = segment.text
-        output_string += f"[{start_time:.2f}s -> {end_time:.2f}s] {text}\n"
+        start_time = str(timedelta(seconds=int(start_time)))
+        print(start_time)
+        output_string += f"{start_time}: {text}\n"
         # print(f"[{format_time(start_time)} --> {format_time(end_time)}] {text}")
 
     # Extract and return the transcript
@@ -87,15 +90,15 @@ path = f"PythonServer/downloads/{audio_file}"
 wav_path = "PythonServer/wav/audio1.wav"
 # convert_to_wav(path, wav_path)
 
-print("WHISPER")
-start_time = time.time()
+# print("WHISPER")
+# start_time = time.time()
 
-print(audio_to_transcript_whisper(path))
+# print(audio_to_transcript_whisper(path))
 
-end_time = time.time()
+# end_time = time.time()
 
-elapsed_time = end_time - start_time
-print(f"Transcription took {elapsed_time:.2f} seconds")
+# elapsed_time = end_time - start_time
+# print(f"Transcription took {elapsed_time:.2f} seconds")
 
 print("FAST WHISPER")
 start_time = time.time()

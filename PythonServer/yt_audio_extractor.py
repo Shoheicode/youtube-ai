@@ -47,7 +47,7 @@ def download_audio(youtube_url, output_path=".", filename=None, file_extension="
         if result.returncode != 0:
             raise Exception(f"Error in yt-dlp: {result.stderr}")
 
-        print("Audio downloaded successfully!")
+        # print("Audio downloaded successfully!")
 
         # If output file used the template, find the actual filename from yt-dlp output
         if filename is None:
@@ -57,7 +57,7 @@ def download_audio(youtube_url, output_path=".", filename=None, file_extension="
                     output_file = line.split("[download] Destination:")[1].strip()
                     break
 
-        return output_file
+        return filename
 
     except Exception as e:
         print(f"Error downloading audio: {str(e)}")

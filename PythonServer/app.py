@@ -11,6 +11,8 @@ import os
 
 import openai
 
+from audio_to_transcript import audio_to_transcript_fast_whisper
+from yt_audio_extractor import download_audio
 from transcript_reader import (
     extract_highlights_with_openai,
     format_transcript_for_analysis,
@@ -116,7 +118,7 @@ def upload_video():
             if transcript_list:
                 # Format transcript for OpenAI
                 formatted_transcript = format_transcript_for_analysis(transcript_list)
-                # print(formatted_transcript)
+                print(formatted_transcript)
 
                 name = query.split(",")[
                     0
@@ -129,6 +131,14 @@ def upload_video():
                         name,  # Use just the name part
                         num_highlights=5,
                     )
+            else:
+                video_url = f"https://www.youtube.com/watch?v={video_id}"
+                file_name = download_audio(
+                    video_url, output_path="PythonServer/downloads"
+                )
+                path = f"PythonServer/downloads/{file_name}"
+                transcript = audio_to_transcript_fast_whisper(path)
+
             if not highlights:
                 highlights = []
 
@@ -201,7 +211,6 @@ def upload_video():
         #         }
         #     )
         return jsonify({"query": query, "appearances": appearances})
-        print("ITEMS", items)
     except HttpError as e:
         print("An error occurred:", e)
         return jsonify({"error": "Failed to fetch video details"}), 500

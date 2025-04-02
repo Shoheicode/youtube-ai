@@ -124,7 +124,7 @@ def format_transcript_for_analysis(transcript_list):
         return ""
     # Convert the transcript list into a single string for analysis
     formatted_transcript = ""
-    print("TRANSCRIPT LIST", transcript_list)
+    # print("TRANSCRIPT LIST", transcript_list)
     for item in transcript_list:
         time_str = str(timedelta(seconds=int(item["start"])))
         formatted_transcript += f"{time_str}: {item['text']}\n"
