@@ -55,7 +55,7 @@ def audio_to_transcript_fast_whisper(audio_file):
         str: Transcript of the audio.
     """
     # Choose model: tiny, base, small, medium, large-v2
-    model_size = "base"
+    model_size = "tiny"
 
     # Set compute_type to "int8" for max speed on CPU, or "float16" for GPU
     model = WhisperModel(model_size, compute_type="int8", device="cpu")

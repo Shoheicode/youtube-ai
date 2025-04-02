@@ -109,6 +109,12 @@ export default function Home() {
                                 ></iframe>
                               </div>
                               <p>{highlight.text}</p>
+                              <button onClick={
+                                () => {
+                                  const videoUrl = `https://www.youtube.com/watch?v=${appearance.videoId}&t=${highlight.startTime}`;
+                                  window.open(videoUrl, '_blank');
+                                }
+                              } className="mt-2 text-blue-500 hover:underline" title="Open in YouTube">Watch on YouTube</button>
                             </div>
                           ))}
                         </div>
