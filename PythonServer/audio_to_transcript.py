@@ -24,7 +24,7 @@ def audio_to_transcript_whisper(audio_file):
         str: Transcript of the audio.
     """
     # Load the Whisper model
-    model = whisper.load_model("medium")
+    model = whisper.load_model("base")
 
     # Transcribe the audio file
     result = model.transcribe(audio_file, word_timestamps=True)
@@ -54,7 +54,7 @@ def audio_to_transcript_fast_whisper(audio_file):
         str: Transcript of the audio.
     """
     # Choose model: tiny, base, small, medium, large-v2
-    model_size = "medium"
+    model_size = "base"
 
     # Set compute_type to "int8" for max speed on CPU, or "float16" for GPU
     model = WhisperModel(model_size, compute_type="int8", device="cpu")
@@ -85,9 +85,9 @@ def convert_to_wav(mp3_path, wav_path):
 audio_file = "audio1.mp3"
 path = f"PythonServer/downloads/{audio_file}"
 wav_path = "PythonServer/wav/audio1.wav"
-convert_to_wav(path, wav_path)
+# convert_to_wav(path, wav_path)
 
-print("FOR mp3")
+print("WHISPER")
 start_time = time.time()
 
 print(audio_to_transcript_whisper(path))
@@ -97,7 +97,7 @@ end_time = time.time()
 elapsed_time = end_time - start_time
 print(f"Transcription took {elapsed_time:.2f} seconds")
 
-print("FOR WAV")
+print("FAST WHISPER")
 start_time = time.time()
 
 print(audio_to_transcript_fast_whisper(path))
