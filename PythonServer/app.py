@@ -47,6 +47,7 @@ def upload_video():
     query = data["query"]
 
     try:
+        # STEP 1: Search for videos
         youtube = get_youtube_service()
         search_response = (
             youtube.search()
@@ -63,13 +64,17 @@ def upload_video():
             .execute()
         )
 
+        # Check if any videos were found
         if not search_response["items"]:
             print("No videos found matching the search criteria.")
             return []
 
+        # STEP 2: Get video details
         items = search_response["items"]
 
+        # Check if any items were found
         for item in items:
+            # Check if the item is a video
             video_id = item["id"]["videoId"]
             video_response = (
                 youtube.videos()
