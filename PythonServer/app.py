@@ -89,7 +89,10 @@ def upload_video():
             return jsonify({"error": "An unexpected error occurred"}), 500
 
         # STEP 3: Get video details and transcript
-        i = 1
+        i = 0
+        with open("PythonServer/count.txt", "r") as file:
+            i = int(file.read().strip())
+        print("I", i)
         for item in filteredList:
             video_id = item["id"]["videoId"]
             video_response = (
@@ -110,7 +113,7 @@ def upload_video():
 
             # Get video transcript
             try:
-                transcript_list = YouTubeTranscriptApi.get_transcript(video_id)
+                transcript_list = None  # YouTubeTranscriptApi.get_transcript(video_id)
             except Exception as e:
                 print(f"Error fetching transcript: {e}")
                 transcript_list = None
@@ -125,7 +128,7 @@ def upload_video():
             if transcript_list:
                 # Format transcript for OpenAI
                 formatted_transcript = format_transcript_for_analysis(transcript_list)
-                print(formatted_transcript)
+                # print(formatted_transcript)
 
                 name = query.split(",")[
                     0
@@ -140,13 +143,13 @@ def upload_video():
                     )
             else:
                 video_url = f"https://www.youtube.com/watch?v={video_id}"
-                na = name + str(i)
+                na = "audio" + str(i)
                 file_name = download_audio(
                     video_url, output_path="PythonServer/downloads", filename=na
                 )
-                path = f"PythonServer/downloads/{file_name}"
+                path = f"PythonServer/downloads/{file_name}.mp3"
                 transcript = audio_to_transcript_fast_whisper(path)
-                print(transcript)
+                # print(transcript)
                 if OPEN_AI_KEY:
                     highlights = extract_highlights_with_openai(
                         transcript,
@@ -167,6 +170,8 @@ def upload_video():
                 }
             )
             i += 1
+        with open("PythonServer/count.txt", "w") as file:
+            file.write(str(i))
         return jsonify({"query": query, "appearances": appearances})
     except HttpError as e:
         print("An error occurred:", e)
