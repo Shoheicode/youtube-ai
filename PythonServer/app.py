@@ -110,7 +110,7 @@ def upload_video():
             except Exception as e:
                 print(f"Error fetching transcript: {e}")
                 transcript_list = None
-                return jsonify({"error": "An unexpected error occurred"}), 500
+                # return jsonify({"error": "An unexpected error occurred"}), 500
 
             # Process transcript and extract highlights
             highlights = None
