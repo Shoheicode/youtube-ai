@@ -66,9 +66,9 @@ def audio_to_transcript_fast_whisper(audio_file):
 
     # Access segments with timestamps
     for segment in result:
-        start_time = segment["start"]
-        end_time = segment["end"]
-        text = segment["text"]
+        start_time = segment.start
+        end_time = segment.end
+        text = segment.text
         output_string += f"[{start_time:.2f}s -> {end_time:.2f}s] {text}\n"
         # print(f"[{format_time(start_time)} --> {format_time(end_time)}] {text}")
 
