@@ -1,5 +1,5 @@
 
-# 🧠 Full-Stack Application
+# 🧠 YouTube-AI Project
 
 This project features a Python backend server and a Next.js frontend. Follow the instructions below to set up and run the application locally.
 
