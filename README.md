@@ -1,5 +1,5 @@
 
-# 🧠 YouTube-AI Project
+# 🎥 YouTube-AI Project
 
 **YouTube Highlight Summarizer** is an AI-powered tool that fetches and analyzes the most recent YouTube appearance of a given person (e.g., "Howard Marks, leading US investor") and generates:
 
