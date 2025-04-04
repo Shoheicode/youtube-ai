@@ -44,5 +44,8 @@ pip install -r requirements.txt
 
 ### Run Python Backend Server: 
 ``` bash
+# for python
 python app.py
+# for python3
+python3 your_script.py
 ```
