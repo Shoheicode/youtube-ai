@@ -18,6 +18,16 @@
 6. **Output**: A clean summary + video clips are presented via the frontend.
 
 ---
+## 🛠 Tech Stack
+- **Frontend**: Next.js (Vercel deployment)
+- **Backend**: Node.js / Python API (for Whisper + processing)
+- **APIs**:
+  - [YouTube Data API](https://developers.google.com/youtube/v3)
+  - [OpenAI Whisper](https://github.com/openai/whisper) for transcription
+  - [OpenAI GPT](https://platform.openai.com/docs/guides/gpt) for summarization
+- **Video Processing**: `ffmpeg` for trimming video segments
+
+---
 
 ## 🚀 Getting Started
 
