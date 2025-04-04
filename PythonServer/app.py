@@ -90,7 +90,7 @@ def upload_video():
 
         # STEP 3: Get video details and transcript
         i = 0
-        with open("PythonServer/count.txt", "r") as file:
+        with open("count.txt", "r") as file:
             i = int(file.read().strip())
         print("I", i)
         for item in filteredList:
@@ -145,9 +145,9 @@ def upload_video():
                 video_url = f"https://www.youtube.com/watch?v={video_id}"
                 na = "audio" + str(i)
                 file_name = download_audio(
-                    video_url, output_path="PythonServer/downloads", filename=na
+                    video_url, output_path="downloads", filename=na
                 )
-                path = f"PythonServer/downloads/{file_name}.mp3"
+                path = f"downloads/{file_name}.mp3"
                 transcript = audio_to_transcript_fast_whisper(path)
                 # print(transcript)
                 if OPEN_AI_KEY:
@@ -170,7 +170,7 @@ def upload_video():
                 }
             )
             i += 1
-        with open("PythonServer/count.txt", "w") as file:
+        with open("count.txt", "w") as file:
             file.write(str(i))
         return jsonify({"query": query, "appearances": appearances})
     except HttpError as e:
