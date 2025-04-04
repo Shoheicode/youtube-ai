@@ -26,6 +26,11 @@ export default function Home() {
     return () => unsubscribe();
   }, []);
 
+  const handleClick = () => {
+    router.push('/signin')
+  }
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -64,7 +69,7 @@ export default function Home() {
       </Head>
       <nav>
         <div className="bg-blue-600 p-4">
-          {/* <button onClick={router.push('/sign-in')}> login</button> */}
+          <button onClick={handleClick}> login</button> 
         </div>
       </nav>
       <main className="container mx-auto px-4 py-8">
