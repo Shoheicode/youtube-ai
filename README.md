@@ -1,7 +1,31 @@
 
-# 🧠 YouTube-AI Project
+# 🎥 YouTube-AI Project
 
-This project features a Python backend server and a Next.js frontend. Follow the instructions below to set up and run the application locally.
+**YouTube Highlight Summarizer** is an AI-powered tool that fetches and analyzes the most recent YouTube appearance of a given person (e.g., "Howard Marks, leading US investor") and generates:
+
+- ✍️ Up to **5 key highlights** summarizing the content (max 250 words total)
+- 🎬 A **20-second video clip** attached to each highlight
+
+---
+
+## 🧠 How It Works
+
+1. **Input**: The user provides a prompt identifying a person (e.g., name + context).
+2. **Search**: The app uses the **YouTube Data API** to find their latest public appearance.
+3. **Transcribe**: The selected video is transcribed using **OpenAI Whisper**.
+4. **Summarize**: The transcription is segmented and summarized using **GPT**.
+5. **Clip**: The app automatically extracts relevant 20-second video clips for each highlight.
+6. **Output**: A clean summary + video clips are presented via the frontend.
+
+---
+## 🛠 Tech Stack
+- **Frontend**: Next.js (Vercel deployment)
+- **Backend**: Node.js / Python API (for Whisper + processing)
+- **APIs**:
+  - [YouTube Data API](https://developers.google.com/youtube/v3)
+  - [OpenAI Whisper](https://github.com/openai/whisper) for transcription
+  - [OpenAI GPT](https://platform.openai.com/docs/guides/gpt) for summarization
+- **Video Processing**: `ffmpeg` for trimming video segments
 
 ---
 
