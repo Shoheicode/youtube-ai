@@ -68,7 +68,7 @@ const LoginButton = () => {
             />
             <path d="M12 11a1 1 0 10-2 0v3a1 1 0 102 0v-3z" />
           </svg>
-          Login
+          Sign In
         </>
       )}
     </button>

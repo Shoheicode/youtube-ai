@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/navigation';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebase/firebase';
+import LoginButton from '@/components/LoginButton';
 
 export default function Home() {
   const [query, setQuery] = useState('');
@@ -64,7 +65,7 @@ export default function Home() {
       </Head>
       <nav>
         <div className="bg-blue-600 p-4">
-           
+           <LoginButton/>
         </div>
       </nav>
       <main className="container mx-auto px-4 py-8">
