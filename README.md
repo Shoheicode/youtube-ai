@@ -37,6 +37,7 @@ python3 app.py
 # Or if python points to Python 3
 python app.py
 ```
+The backend will be running on [http://localhost:8000](http://localhost:8000) by default.
 
 ---
 
