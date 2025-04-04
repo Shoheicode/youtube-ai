@@ -1,8 +1,12 @@
 
 # 🧠 YouTube-AI Project
 
-This project features a Python backend server and a Next.js frontend. Follow the instructions below to set up and run the application locally.
+**YouTube Highlight Summarizer** is an AI-powered tool that fetches and analyzes the most recent YouTube appearance of a given person (e.g., "Howard Marks, leading US investor") and generates:
 
+- ✍️ Up to **5 key highlights** summarizing the content (max 250 words total)
+- 🎬 A **20-second video clip** attached to each highlight
+
+---
 ---
 
 ## 🚀 Getting Started
