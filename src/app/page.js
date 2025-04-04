@@ -27,7 +27,7 @@ export default function Home() {
   }, []);
 
   const handleClick = () => {
-    router.push('/signin')
+    router.push('/sign-in')
   }
 
 
