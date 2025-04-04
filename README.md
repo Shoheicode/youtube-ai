@@ -7,6 +7,16 @@
 - 🎬 A **20-second video clip** attached to each highlight
 
 ---
+
+## 🧠 How It Works
+
+1. **Input**: The user provides a prompt identifying a person (e.g., name + context).
+2. **Search**: The app uses the **YouTube Data API** to find their latest public appearance.
+3. **Transcribe**: The selected video is transcribed using **OpenAI Whisper**.
+4. **Summarize**: The transcription is segmented and summarized using **GPT**.
+5. **Clip**: The app automatically extracts relevant 20-second video clips for each highlight.
+6. **Output**: A clean summary + video clips are presented via the frontend.
+
 ---
 
 ## 🚀 Getting Started
