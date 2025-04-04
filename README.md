@@ -50,3 +50,14 @@ python app.py
 # for python3
 python3 your_script.py
 ```
+
+### Running Next.js front end:
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
