@@ -1,13 +1,30 @@
 // pages/index.js
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import { useRouter } from 'next/navigation';
+import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from './firebase/firebase';
 
 export default function Home() {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
+  const [user, setUser] = useState(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+      } else {
+        setUser(null);
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,7 +62,11 @@ export default function Home() {
         <meta name="description" content="Find recent YouTube appearances of notable people" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
+      <nav>
+        <div className="bg-blue-600 p-4">
+          {/* <button onClick={router.push('/sign-in')}> login</button> */}
+        </div>
+      </nav>
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-center mb-8">YouTube Appearance Finder</h1>
         
