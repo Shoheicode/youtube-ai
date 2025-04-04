@@ -12,7 +12,6 @@ export default function Home() {
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
   const [user, setUser] = useState(null);
-  const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -25,10 +24,6 @@ export default function Home() {
 
     return () => unsubscribe();
   }, []);
-
-  const handleClick = () => {
-    router.push('/sign-in')
-  }
 
 
   const handleSubmit = async (e) => {
@@ -69,7 +64,7 @@ export default function Home() {
       </Head>
       <nav>
         <div className="bg-blue-600 p-4">
-          <button onClick={handleClick}> login</button> 
+           
         </div>
       </nav>
       <main className="container mx-auto px-4 py-8">
