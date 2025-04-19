@@ -53,7 +53,7 @@ def extract_highlights_with_openai(transcript_text, person_name, num_highlights=
           {{"timestamp": "[00:15:45]", "summary": "Analysis of current Federal Reserve policy and its impact on bond yields"}}
         ]
         Transcript:
-        {truncated_transcript}
+        {transcript_text}
         """
 
         response = openai.ChatCompletion.create(
