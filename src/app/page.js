@@ -103,7 +103,6 @@ export default function Home() {
           {results && (
             <div className="mt-8">
               <h2 className="text-2xl font-semibold mb-4">Results for "{results.query}"</h2>
-              <button onClick={addToDatabase()}></button>
               
               {results.appearances.length > 0 ? (
                 <div className="space-y-6">
@@ -114,6 +113,7 @@ export default function Home() {
                         <p className="text-gray-600 mb-4">
                           {new Date(appearance.publishedAt).toLocaleDateString()} • {appearance.channelTitle}
                         </p>
+                        <button onClick={addToDatabase(appearance.title, appearance.channelTitle, appearance.highlights)}>Save</button>
                         
                         <h4 className="font-semibold mb-2">Key Highlights:</h4>
                         <div className="space-y-4">
