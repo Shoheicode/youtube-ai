@@ -28,16 +28,17 @@ export default function LoginPage() {
       }
     };
     const handleSignUp = async (e) => {
+      router.push("/sign-up");
       e.preventDefault();
       setLoading(true);
       setError('');
   
-      const { user, error } = await signUpWithEmail(email, password);
-      if (error) {
-        setErrorMessage(error);  // Show user-friendly error message in UI
-      } else {
-        router.push("/");        // Redirect on success
-      }
+      // const { user, error } = await signUpWithEmail(email, password);
+      // if (error) {
+      //   setErrorMessage(error);  // Show user-friendly error message in UI
+      // } else {
+      //   router.push("/");        // Redirect on success
+      // }
     };
   
     return (

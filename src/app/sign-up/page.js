@@ -36,7 +36,7 @@ export default function LoginPage() {
       if (error) {
         setErrorMessage(error);  // Show user-friendly error message in UI
       } else {
-        router.push("/");        // Redirect on success
+        router.push("");        // Redirect on success
       }
     };
   
@@ -64,13 +64,13 @@ export default function LoginPage() {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button
+          {/* <button
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
             disabled={loading}
           >
             {loading ? 'Logging in...' : 'Login'}
-          </button>
+          </button> */}
           <button
             className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
             disabled={loading}
