@@ -10,6 +10,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [loading1, setLoading1] = useState(false);
     const router = useRouter();
     // const {user} = useAuth();
      
@@ -28,10 +29,10 @@ export default function LoginPage() {
       }
     };
     const handleSignUp = async (e) => {
-      router.push("/sign-up");
       e.preventDefault();
-      setLoading(true);
+      setLoading1(true);
       setError('');
+      router.push("/sign-up");
   
       // const { user, error } = await signUpWithEmail(email, password);
       // if (error) {
@@ -74,10 +75,10 @@ export default function LoginPage() {
           </button>
           <button
             className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
-            disabled={loading}
+            disabled={loading1}
             onClick={handleSignUp}
           >
-            {loading ? 'Logging in...' : 'Sign Up'}
+            {loading1 ? 'Logging in...' : 'Sign Up'}
           </button>
         </form>
       </div>
