@@ -138,19 +138,25 @@ def upload_video():
 
         # STEP 3: Get video details and transcript
         i = 0
-        with open("count.txt", "r") as file:
+        base_dir = os.path.dirname(__file__)
+        count_path = os.path.join(base_dir, "count.txt")
+
+        with open(count_path, "r") as file:
             i = int(file.read().strip())
         print("I", i)
         for item in filteredList:
-            video_id = item["id"]["videoId"]
-            video_response = (
-                youtube.videos()
-                .list(
-                    part="snippet,contentDetails,statistics",
-                    id=video_id,
-                )
-                .execute()
-            )
+            # print("hi")
+            print(item)
+            video_id = item["id"]
+            # video_response = (
+            #     youtube.videos()
+            #     .list(
+            #         part="snippet,contentDetails,statistics",
+            #         id=video_id,
+            #     )
+            #     .execute()
+            # )
+            print("Hi")
             # Check if video details were found
             if not video_response["items"]:
                 print(f"No details found for video ID: {video_id}")
@@ -184,46 +190,47 @@ def upload_video():
             else:
                 video_url = f"https://www.youtube.com/watch?v={video_id}"
                 filepath = "audio" + str(i)
+                base_dir = os.path.dirname(__file__)
+                out_path = os.path.join(base_dir, "downloads", name)
                 file_name = download_audio(
-                    video_url, output_path="downloads", filename=filepath
+                    video_url, output_path=out_path, filename=filepath
                 )
                 path = f"downloads/{name}/{file_name}.mp3"
-                # transcript = audio_to_transcript_fast_whisper(path)
-                # # print(transcript)
-                # if OPEN_AI_KEY:
-                #     highlights = extract_highlights_with_openai(
-                #         transcript,
-                #         name,  # Use just the name part
-                #         num_highlights=5,
-                #     )
-            AUDIO_DIR = os.path.join(os.path.dirname(__file__), "downloads")
-            audio_files = [
-                os.path.join(AUDIO_DIR, f)
-                for f in os.listdir(AUDIO_DIR)
-                if f.endswith(".mp3") or f.endswith(".wav")
-            ]
+                appearances.append(
+                    {
+                        "videoId": video_id,
+                        "title": video_details["snippet"]["title"],
+                        "channelTitle": video_details["snippet"]["channelTitle"],
+                        "publishedAt": video_details["snippet"]["publishedAt"],
+                        # "highlights": highlights,
+                    }
+                )
+                i += 1
+        print("APPEARANCES", appearances)
+        AUDIO_DIR = os.path.join(os.path.dirname(__file__), f"downloads/{name}/")
+        audio_files = [
+            os.path.join(AUDIO_DIR, f)
+            for f in os.listdir(AUDIO_DIR)
+            if f.endswith(".mp3") or f.endswith(".wav")
+        ]
 
-            with Pool(processes=NUM_WORKERS) as pool:
-                results = pool.map(transcribe_file, audio_files, name)
+        print("POOL PARTY")
+        args = [(file, name) for file in audio_files]
+        with Pool(processes=NUM_WORKERS) as pool:
+            results = pool.starmap(transcribe_file, args)
 
-            for res in results:
-                print(res)
+        print("RESULTS:")
+        for res in results:
+            print(res)
 
-            highlights = results
+        highlights = results
 
-            if not highlights:
-                highlights = []
+        if not highlights:
+            highlights = []
 
-            appearances.append(
-                {
-                    "videoId": video_id,
-                    "title": video_details["snippet"]["title"],
-                    "channelTitle": video_details["snippet"]["channelTitle"],
-                    "publishedAt": video_details["snippet"]["publishedAt"],
-                    "highlights": highlights,
-                }
-            )
-            i += 1
+        for i in range(len(appearances)):
+            appearances[i]["highlights"] = highlights[i]
+
         with open("count.txt", "w") as file:
             file.write(str(i))
         return jsonify({"query": query, "appearances": appearances})

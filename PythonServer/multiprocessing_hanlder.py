@@ -15,6 +15,7 @@ NUM_WORKERS = cpu_count()  # Number of parallel processes
 # TRANSCRIBER FUNCTION
 def transcribe_file(audio_path, name=""):
     # name = "Factor"
+    print("TRANSCRIBING")
     transcript = audio_to_transcript_fast_whisper(audio_path)
     highlights = extract_highlights_with_openai(
         transcript,
