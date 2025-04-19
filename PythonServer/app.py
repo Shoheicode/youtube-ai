@@ -97,6 +97,11 @@ def upload_video():
             title = item["snippet"]["title"]
             duration = parse_duration(item["contentDetails"]["duration"])
             print(duration.time)
+            total_seconds = (
+                duration.time.minutes * 60
+                + duration.time.hours * 60 * 60
+                + duration.time.seconds
+            )
 
             print("DURATION", duration, "TITLE", title)
 
