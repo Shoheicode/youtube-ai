@@ -2,6 +2,8 @@ import os
 from multiprocessing import Pool, cpu_count
 from faster_whisper import WhisperModel
 
+from audio_to_transcript import audio_to_transcript_fast_whisper
+
 # CONFIGS
 AUDIO_DIR = "downloads"  # Folder with .mp3 or .wav files
 MODEL_SIZE = "base"  # tiny, base, small, medium, large
@@ -11,23 +13,7 @@ NUM_WORKERS = cpu_count()  # Number of parallel processes
 
 # TRANSCRIBER FUNCTION
 def transcribe_file(audio_path):
-    print(f"Processing: {audio_path}")
-
-    # Load model inside the worker to avoid shared memory issues
-    model = WhisperModel(
-        MODEL_SIZE,
-        # device="cuda" if USE_GPU else "cpu",
-        # compute_type="float16" if USE_GPU else "int8",
-    )
-
-    segments, _ = model.transcribe(audio_path, beam_size=1)
-    result = "\n".join([seg.text for seg in segments])
-
-    output_path = audio_path + ".txt"
-    with open(output_path, "w", encoding="utf-8") as f:
-        f.write(result)
-
-    return f"Finished: {audio_path}"
+    audio_to_transcript_fast_whisper(audio_path)
 
 
 # MAIN: RUN WITH MULTIPROCESSING
