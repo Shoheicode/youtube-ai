@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { initializeApp } from 'firebase/app';
-import { auth,signInWithEmailAndPassword, signUpWithEmail } from '../firebase/firebase';
+import { auth,signInWithEmailAndPassword, signUpWithEmail, createUserWithEmailAndPassword  } from '../firebase/firebase';
 
 export default function LoginPage() {
     const router = useRouter();
@@ -24,7 +24,7 @@ export default function LoginPage() {
 
         router.push("/"); // Redirect to homepage after successful signup
         } catch (error) {
-        // console.error("Signup error:", error.code);
+        console.log("Signup error:", error.code);
 
         switch (error.code) {
             case "auth/email-already-in-use":
