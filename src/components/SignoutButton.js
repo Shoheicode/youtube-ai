@@ -78,4 +78,4 @@ const SignOutButton = () => {
   );
 };
 
-export default LoginButton;
+export default SignOutButton;

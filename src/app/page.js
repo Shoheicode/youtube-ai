@@ -7,6 +7,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 // import { auth } from './firebase/firebase';
 import LoginButton from '@/components/LoginButton';
 import { useAuth } from './hook/useAuth';
+import SignOutButton from '@/components/SignoutButton';
 
 export default function Home() {
   const [query, setQuery] = useState('');
@@ -56,7 +57,7 @@ export default function Home() {
         <div className="bg-blue-600 p-4">
           {user ?(
             <>
-            <p>Sign out</p>
+            <SignOutButton/>
            </>
           ): <>
             <LoginButton/>
