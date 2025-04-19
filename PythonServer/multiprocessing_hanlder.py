@@ -3,7 +3,7 @@ from multiprocessing import Pool, cpu_count
 from faster_whisper import WhisperModel
 
 # CONFIGS
-AUDIO_DIR = "audio_files"  # Folder with .mp3 or .wav files
+AUDIO_DIR = "downloads"  # Folder with .mp3 or .wav files
 MODEL_SIZE = "base"  # tiny, base, small, medium, large
 USE_GPU = True  # Set to False to run on CPU
 NUM_WORKERS = cpu_count()  # Number of parallel processes
