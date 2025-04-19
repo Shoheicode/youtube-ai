@@ -5,6 +5,7 @@ from flask_cors import CORS
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from dotenv import load_dotenv
+from isoduration import parse_duration
 from youtube_transcript_api import YouTubeTranscriptApi
 
 import os
@@ -73,6 +74,21 @@ def upload_video():
         if not search_response["items"]:
             print("No videos found matching the search criteria.")
             return []
+
+        # filter videos for videos that are shorter than 10 mins
+        filtered_videos = []
+        for item in search_response["items"]:
+            duration = parse_duration(
+                item["contentDetails"]["duration"]
+            ).total_seconds()
+            if duration <= 600:  # 600 seconds = 10 minutes
+                filtered_videos.append(
+                    {
+                        "title": item["snippet"]["title"],
+                        "videoId": item["id"],
+                        "duration_seconds": duration,
+                    }
+                )
 
         # STEP 2: Get video details
         items = search_response["items"]
