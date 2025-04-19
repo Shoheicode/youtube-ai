@@ -25,18 +25,18 @@ def transcribe_file(audio_path, name=""):
 
 
 # MAIN: RUN WITH MULTIPROCESSING
-if __name__ == "__main__":
-    AUDIO_DIR = os.path.join(os.path.dirname(__file__), "downloads")
-    audio_files = [
-        os.path.join(AUDIO_DIR, f)
-        for f in os.listdir(AUDIO_DIR)
-        if f.endswith(".mp3") or f.endswith(".wav")
-    ]
+# if __name__ == "__main__":
+#     AUDIO_DIR = os.path.join(os.path.dirname(__file__), "downloads")
+#     audio_files = [
+#         os.path.join(AUDIO_DIR, f)
+#         for f in os.listdir(AUDIO_DIR)
+#         if f.endswith(".mp3") or f.endswith(".wav")
+#     ]
 
-    print(audio_files)
+#     print(audio_files)
 
-    with Pool(processes=NUM_WORKERS) as pool:
-        results = pool.map(transcribe_file, audio_files)
+#     with Pool(processes=NUM_WORKERS) as pool:
+#         results = pool.map(transcribe_file, audio_files)
 
-    for res in results:
-        print(res)
+#     for res in results:
+#         print(res)
