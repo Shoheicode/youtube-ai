@@ -36,7 +36,7 @@ async function signUpWithEmail(email, password) {
   }
 }
 
-async function addToDatabase(title, channelTitle, highlights){
+async function addToDatabase(title, channelTitle,publishAt, highlights){
   try {
     const uid = auth.currentUser?.uid;
 
@@ -49,6 +49,7 @@ async function addToDatabase(title, channelTitle, highlights){
     // const docRef = await database.collection("users").doc(userId).set(data);
     await setDoc(appearancesRef, {
       title: title,
+      publishAt: publishAt,
       channelTitle: channelTitle,
       highlights: highlights,
       createdAt: new Date()
