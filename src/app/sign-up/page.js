@@ -51,8 +51,8 @@ export default function LoginPage() {
           onSubmit={handleSignUp}
           className="bg-white p-8 rounded-lg shadow-lg w-96 space-y-4"
         >
-          <h2 className="text-2xl font-bold text-center">Login</h2>
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+          <h2 className="text-2xl font-bold text-center">Sign-Up</h2>
+          {/* {error && <p className="text-red-500 text-sm">{error}</p>} */}
           <input
             type="email"
             placeholder="Email"
