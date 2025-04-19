@@ -143,7 +143,7 @@ def upload_video():
         args = [(info, name) for info in video_info_list]
 
         with Pool(processes=NUM_WORKERS) as pool:
-            results = pool.starmap(transcribe_file, args)
+            appearances = pool.starmap(transcribe_file, args)
 
         # for item in filteredList:
         #     # print("hi")
