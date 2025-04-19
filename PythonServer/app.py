@@ -117,26 +117,6 @@ def upload_video():
                 if len(filteredList) >= 5:
                     break
 
-        # # filter videos for videos that are shorter than 10 mins
-        # filtered_videos = []
-        # for item in video_response["items"]:
-        #     duration = parse_duration(
-        #         item["contentDetails"]["duration"]
-        #     ).total_seconds()
-        #     print("DURATION", duration)
-        #     if duration <= 600:  # 600 seconds = 10 minutes
-        #         filtered_videos.append(item)
-
-        # # STEP 2: Get video details
-        # items = search_response["items"]
-        # filteredList = []
-        # for item in items:
-        #     title = item["snippet"]["title"]
-        #     if re.search(rf"\b{re.escape(name)}\b", title, re.IGNORECASE):
-        #         filteredList.append(item)
-        #     if len(filteredList) >= 5:
-        #         break
-
         if not filteredList:
             print("No videos found matching the name in the title.")
             return jsonify({"error": "An unexpected error occurred"}), 500
@@ -148,12 +128,12 @@ def upload_video():
 
         with open(count_path, "r") as file:
             ct = int(file.read().strip())
-        print("I", ct)
+        # print("I", ct)
         for item in filteredList:
             # print("hi")
             print(item)
             video_id = item["id"]
-            print("Hi")
+            # print("Hi")
             # Check if video details were found
             if not video_response["items"]:
                 print(f"No details found for video ID: {video_id}")
@@ -203,7 +183,7 @@ def upload_video():
                     }
                 )
                 ct += 1
-        print("APPEARANCES", appearances)
+        # print("APPEARANCES", appearances)
         AUDIO_DIR = os.path.join(os.path.dirname(__file__), f"downloads/{name}/")
         audio_files = [
             os.path.join(AUDIO_DIR, f)

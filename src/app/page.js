@@ -113,7 +113,7 @@ export default function Home() {
                         <p className="text-gray-600 mb-4">
                           {new Date(appearance.publishedAt).toLocaleDateString()} • {appearance.channelTitle}
                         </p>
-                        <button onClick={addToDatabase(appearance.title, appearance.channelTitle, appearance.highlights)}>Save</button>
+                        <button onClick={()=>addToDatabase(appearance.title, appearance.channelTitle, appearance.highlights)}>Save</button>
                         
                         <h4 className="font-semibold mb-2">Key Highlights:</h4>
                         <div className="space-y-4">

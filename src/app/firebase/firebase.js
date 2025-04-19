@@ -38,12 +38,22 @@ async function signUpWithEmail(email, password) {
 
 async function addToDatabase(title, channelTitle, highlights){
   try {
+    const uid = auth.currentUser?.uid;
+
+    if (!uid) {
+      console.error("User not logged in");
+      return;
+    }
+    const appearancesRef = collection(db, "users", uid, "appearances");
     // const docRef = await database.collection("users").doc(userId).set(data);
-    setDoc(doc(database, "users", auth.currentUser.uid), {
-      title: title,
-      channelTitle: channelTitle,
-      highlights: highlights,
+    const docRef = await addDoc(appearancesRef, {
+      title: appearance.title,
+      channelTitle: appearance.channelTitle,
+      highlights: appearance.highlights,
+      createdAt: new Date()
     });
+
+    console.log("Document written with ID:", docRef.id);
     // console.log("Document written with ID: ", docRef.id);
   } catch (error) {
     console.error("Error adding document: ", error);
