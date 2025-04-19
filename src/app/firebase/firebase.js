@@ -16,6 +16,7 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
+console.log("I AM RUNNING");
 const app = initializeApp(firebaseConfig);
 const database = getFirestore(app);
 

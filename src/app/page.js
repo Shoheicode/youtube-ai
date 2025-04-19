@@ -4,28 +4,16 @@ import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/navigation';
 import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from './firebase/firebase';
+// import { auth } from './firebase/firebase';
 import LoginButton from '@/components/LoginButton';
+import { useAuth } from './hook/useAuth';
 
 export default function Home() {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
-  // const [user, setUser] = useState(null);
-  const {user} = useAuth();
-
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-      } else {
-        setUser(null);
-      }
-    });
-
-    return () => unsubscribe();
-  }, []);
+  const { user, loading: authLoading } = useAuth();
 
 
   const handleSubmit = async (e) => {
@@ -66,7 +54,13 @@ export default function Home() {
       </Head>
       <nav>
         <div className="bg-blue-600 p-4">
-           <LoginButton/>
+          {user ?(
+            <>
+            <p>Logged in</p>
+           </>
+          ): <>
+            <LoginButton/>
+          </>}
         </div>
       </nav>
       <main className="container mx-auto px-4 py-8">
