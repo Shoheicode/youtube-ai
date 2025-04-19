@@ -21,7 +21,7 @@ export default function LoginPage() {
   
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        addToDatabase(auth.currentUser.uid, "HELLO");
+        // addToDatabase(auth.currentUser.uid, "HELLO");
         router.push('/'); // Redirect to dashboard after login
       } catch (err) {
         setError(err.message);

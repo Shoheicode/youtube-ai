@@ -129,6 +129,17 @@ def upload_video():
         with open(count_path, "r") as file:
             ct = int(file.read().strip())
         # print("I", ct)
+
+        video_info_list = [
+            {
+                "videoId": item["id"],
+                "title": item["snippet"]["title"],
+                "channelTitle": item["snippet"]["channelTitle"],
+                "publishedAt": item["snippet"]["publishedAt"],
+            }
+            for item in filteredList
+        ]
+
         for item in filteredList:
             # print("hi")
             print(item)
