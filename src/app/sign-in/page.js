@@ -27,6 +27,20 @@ export default function LoginPage() {
         setLoading(false);
       }
     };
+    const handleSignUp = async (e) => {
+      e.preventDefault();
+      setLoading(true);
+      setError('');
+  
+      try {
+        await createUserWithEmailAndPassword(auth, email, password);
+        router.push('/'); // Redirect to dashboard after login
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
   
     return (
       <div className="flex items-center justify-center h-screen bg-gray-100">
@@ -56,6 +70,13 @@ export default function LoginPage() {
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
             disabled={loading}
+          >
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+          <button
+            className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
+            disabled={loading}
+            onClick={handleSignUp}
           >
             {loading ? 'Logging in...' : 'Login'}
           </button>

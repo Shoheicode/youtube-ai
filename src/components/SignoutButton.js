@@ -15,11 +15,11 @@ const SignOutButton = () => {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       signOut(auth); // Sign out from Firebase
-      router.push('/sign-in'); // Redirect to dashboard after login
+      // router.push('/sign-in'); // Redirect to dashboard after login
       // Handle successful login here
-      console.log('Login successful');
+      console.log('Logout successful');
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error('Logout failed:', error);
     } finally {
       setIsLoading(false);
     }
