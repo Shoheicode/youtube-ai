@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,signOut } from "firebase/auth";
-import { getFirestore, setDoc, doc, collection } from 'firebase/firestore';
+import { getFirestore, setDoc, doc, collection,getDocs } from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -36,6 +36,29 @@ async function signUpWithEmail(email, password) {
   }
 }
 
+async function getDataFromDatabase() {
+  try {
+    if (!auth.currentUser) {
+      console.warn("User not logged in");
+      return;
+    }
+    
+    const uid = auth.currentUser?.uid;
+    console.log(uid);
+    if (!uid) {
+      console.error("User not logged in");
+      return;
+    }
+    const appearancesRef = collection(database, "users", uid, "appearances");
+    const querySnapshot = await getDocs(appearancesRef);
+    const data = querySnapshot.docs.map(doc => doc.data());
+    console.log(data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching data: ", error);
+  }
+}
+
 async function addToDatabase(title, channelTitle,publishAt, highlights){
   try {
     const uid = auth.currentUser?.uid;
@@ -63,4 +86,4 @@ async function addToDatabase(title, channelTitle,publishAt, highlights){
 }
 
 
-export {app, addToDatabase, auth,signInWithEmailAndPassword, signUpWithEmail,signOut, createUserWithEmailAndPassword};
+export {app, addToDatabase, auth,signInWithEmailAndPassword, signUpWithEmail,signOut, createUserWithEmailAndPassword,getDataFromDatabase};

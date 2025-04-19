@@ -9,12 +9,14 @@ import LoginButton from '@/components/LoginButton';
 import { useAuth } from './hook/useAuth';
 import SignOutButton from '@/components/SignoutButton';
 import { addToDatabase } from './firebase/firebase';
+import { BookmarkIcon } from '@heroicons/react/24/solid'; // Optional, if using Heroicons
 
 export default function Home() {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
+  const router = useRouter();
   const { user, loading: authLoading } = useAuth();
   // const {user} = useAuth();
 
@@ -58,9 +60,13 @@ export default function Home() {
       <nav>
         <div className="bg-blue-600 p-4">
           {user ?(
-            <>
+            <div className="flex justify-between items-center">
             <SignOutButton/>
-           </>
+            <button className='px-5 py-2 bg-green-600 text-white rounded-lg font-medium shadow hover:bg-green-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2' onClick={()=>router.push("/saved-highlights")}>
+            <BookmarkIcon className="w-5 h-5" />
+             View Saved Sites
+             </button>
+           </div>
           ): <>
             <LoginButton/>
           </>}

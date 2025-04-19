@@ -6,9 +6,11 @@ import { useRouter } from 'next/navigation';
 import { onAuthStateChanged } from 'firebase/auth';
 // import { auth } from './firebase/firebase';
 import LoginButton from '@/components/LoginButton';
-import { useAuth } from './hook/useAuth';
+// import { useAuth } from './hook/useAuth';
 import SignOutButton from '@/components/SignoutButton';
-import { addToDatabase } from './firebase/firebase';
+import { addToDatabase } from '../firebase/firebase';
+import { getDataFromDatabase } from '../firebase/firebase';
+import { useAuth } from '../hook/useAuth';
 
 export default function SavedHighlights() {
   const [query, setQuery] = useState('');
@@ -18,8 +20,16 @@ export default function SavedHighlights() {
   const { user, loading: authLoading } = useAuth();
 
   useEffect(() => {
-
-  });
+    const fetchData = async () => {
+      const data = await getDataFromDatabase();
+      setResults(data);
+    };
+  
+    if (user && !authLoading) {
+      fetchData();
+    }
+  }, [user, authLoading]);
+  
 
 
   // const {user} = useAuth();
@@ -43,11 +53,11 @@ export default function SavedHighlights() {
         <div className="max-w-2xl mx-auto bg-white rounded-lg shadow p-6">
           {results && (
             <div className="mt-8">
-              <h2 className="text-2xl font-semibold mb-4">Results for "{results.query}"</h2>
+              {/* <h2 className="text-2xl font-semibold mb-4">Results for "{results.query}"</h2> */}
               
-              {results.appearances.length > 0 ? (
+              {results.length > 0 ? (
                 <div className="space-y-6">
-                  {results.appearances.map((appearance, index) => (
+                  {results.map((appearance, index) => (
                     <div key={index} className="border rounded-lg overflow-hidden">
                       <div className="p-4">
                         <h3 className="text-xl font-medium mb-2">{appearance.title}</h3>
