@@ -1,6 +1,6 @@
 // pages/index.js
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import Head from 'next/head';
 import { useRouter } from 'next/navigation';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -16,45 +16,16 @@ export default function SavedHighlights() {
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
   const { user, loading: authLoading } = useAuth();
+
+  useEffect(() => {
+
+  });
+
+
   // const {user} = useAuth();
-
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    setError('');
-    
-    try {
-      const response = await fetch('http://localhost:8000/upload', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ query }),
-      });
-      console.log(response);
-      
-      if (!response.ok) {
-        throw new Error('Failed to fetch results');
-      }
-      
-      const data = await response.json();
-      console.log(data);
-      setResults(data);
-    } catch (err) {
-      setError('Error fetching results: ' + err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <Head>
-        <title>YouTube Appearance Finder</title>
-        <meta name="description" content="Find recent YouTube appearances of notable people" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
       <nav>
         <div className="bg-blue-600 p-4">
           {user ?(
@@ -67,39 +38,9 @@ export default function SavedHighlights() {
         </div>
       </nav>
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-center mb-8">YouTube Appearance Finder</h1>
+        <h1 className="text-3xl font-bold text-center mb-8">Saved Youtube Highlights</h1>
         
         <div className="max-w-2xl mx-auto bg-white rounded-lg shadow p-6">
-          <form onSubmit={handleSubmit} className="mb-6">
-            <div className="mb-4">
-              <label htmlFor="query" className="block text-gray-700 mb-2">
-                Enter a person's identity (e.g., "Howard Marks, leading US investor")
-              </label>
-              <input
-                type="text"
-                id="query"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Howard Marks, leading US investor"
-                required
-              />
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg transition duration-200"
-              disabled={loading}
-            >
-              {loading ? 'Searching...' : 'Search'}
-            </button>
-          </form>
-
-          {error && (
-            <div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 mb-6">
-              <p>{error}</p>
-            </div>
-          )}
-
           {results && (
             <div className="mt-8">
               <h2 className="text-2xl font-semibold mb-4">Results for "{results.query}"</h2>
