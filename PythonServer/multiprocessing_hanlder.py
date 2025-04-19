@@ -15,7 +15,8 @@ NUM_WORKERS = cpu_count()  # Number of parallel processes
 
 # TRANSCRIBER FUNCTION
 def transcribe_file(video_info, name=""):
-    print("Transcribing video:", video_info["videoId"])
+    print(f"[START] {video_info['videoId']}")
+    print(f"[{video_id}] Downloading...")
     video_id = video_info["videoId"]
     video_url = f"https://www.youtube.com/watch?v={video_id}"
     filepath = f"audio_{video_id}"
@@ -24,10 +25,13 @@ def transcribe_file(video_info, name=""):
     out_path = os.path.join(base_dir, "downloads", name)
     os.makedirs(out_path, exist_ok=True)
 
+    print("Audio file path:", audio_path)
     file_name = download_audio(video_url, output_path=out_path, filename=filepath)
     audio_path = os.path.join(out_path, f"{file_name}.mp3")
 
+    print(f"[{video_id}] Transcribing...")
     transcript = audio_to_transcript_fast_whisper(audio_path)
+    print(f"[{video_id}] Extracting highlights...")
     highlights = extract_highlights_with_openai(transcript, name, num_highlights=5)
 
     print("end")
