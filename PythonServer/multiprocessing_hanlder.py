@@ -2,6 +2,7 @@ import os
 from multiprocessing import Pool, cpu_count
 from faster_whisper import WhisperModel
 
+from transcript_reader import extract_highlights_with_openai
 from audio_to_transcript import audio_to_transcript_fast_whisper
 
 # CONFIGS
@@ -13,7 +14,14 @@ NUM_WORKERS = cpu_count()  # Number of parallel processes
 
 # TRANSCRIBER FUNCTION
 def transcribe_file(audio_path):
-    audio_to_transcript_fast_whisper(audio_path)
+    name = "Factor"
+    transcript = audio_to_transcript_fast_whisper(audio_path)
+    highlights = extract_highlights_with_openai(
+        transcript,
+        name,  # Use just the name part
+        num_highlights=5,
+    )
+    return highlights
 
 
 # MAIN: RUN WITH MULTIPROCESSING
