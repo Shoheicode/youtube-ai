@@ -95,9 +95,8 @@ def upload_video():
         for item in video_response["items"]:
             video_id = item["id"]
             title = item["snippet"]["title"]
-            duration = parse_duration(
-                item["contentDetails"]["duration"]
-            ).total_seconds()
+            duration = parse_duration(item["contentDetails"]["duration"])
+            print(duration.time)
 
             print("DURATION", duration, "TITLE", title)
 
