@@ -103,9 +103,9 @@ def upload_video():
                 + duration.time.seconds
             )
 
-            print("DURATION", duration, "TITLE", title)
+            print("DURATION", total_seconds, "TITLE", title)
 
-            if duration <= 600 and re.search(
+            if total_seconds <= 600 and re.search(
                 rf"\b{re.escape(name)}\b", title, re.IGNORECASE
             ):
                 filteredList.append(item)
