@@ -36,4 +36,14 @@ async function signUpWithEmail(email, password) {
   }
 }
 
+async function addToDatabase(userId, data) {
+  try {
+    const docRef = await database.collection("users").doc(userId).set(data);
+    console.log("Document written with ID: ", docRef.id);
+  } catch (error) {
+    console.error("Error adding document: ", error);
+  }
+}
+
+
 export {app, database, auth,signInWithEmailAndPassword, signUpWithEmail,signOut, createUserWithEmailAndPassword};
