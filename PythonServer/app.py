@@ -81,6 +81,7 @@ def upload_video():
             duration = parse_duration(
                 item["contentDetails"]["duration"]
             ).total_seconds()
+            print("DURATION", duration)
             if duration <= 600:  # 600 seconds = 10 minutes
                 filtered_videos.append(
                     {
