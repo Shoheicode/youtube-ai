@@ -32,13 +32,11 @@ export default function LoginPage() {
       setLoading(true);
       setError('');
   
-      try {
-        await signUpWithEmail(email, password);
-        router.push('/'); // Redirect to dashboard after login
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
+      const { user, error } = await signUpWithEmail(email, password);
+      if (error) {
+        setErrorMessage(error);  // Show user-friendly error message in UI
+      } else {
+        router.push("/");        // Redirect on success
       }
     };
   
