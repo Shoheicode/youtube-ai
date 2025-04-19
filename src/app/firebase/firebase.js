@@ -23,4 +23,17 @@ const database = getFirestore(app);
 // Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
 
-export {app, database, auth,signInWithEmailAndPassword, createUserWithEmailAndPassword,signOut};
+async function signUpWithEmail(email, password) {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    return { user: userCredential.user, error: null };
+  } catch (error) {
+    if (error.code === "auth/email-already-in-use") {
+      return { user: null, error: "An account with this email already exists." };
+    } else {
+      return { user: null, error: error.message };
+    }
+  }
+}
+
+export {app, database, auth,signInWithEmailAndPassword, signUpWithEmail,signOut};

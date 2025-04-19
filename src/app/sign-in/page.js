@@ -78,7 +78,7 @@ export default function LoginPage() {
             disabled={loading}
             onClick={handleSignUp}
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {loading ? 'Logging in...' : 'Sign Up'}
           </button>
         </form>
       </div>
