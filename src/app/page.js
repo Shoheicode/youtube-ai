@@ -12,7 +12,8 @@ export default function Home() {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
+  const {user} = useAuth();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
