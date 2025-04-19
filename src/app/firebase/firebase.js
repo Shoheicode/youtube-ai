@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,signOut } from "firebase/auth";
-import { getFirestore } from 'firebase/firestore';
+import { getFirestore, setDoc, doc } from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -38,7 +38,10 @@ async function signUpWithEmail(email, password) {
 
 async function addToDatabase(userId, data) {
   try {
-    const docRef = await database.collection("users").doc(userId).set(data);
+    // const docRef = await database.collection("users").doc(userId).set(data);
+    setDoc(doc(database, "users", userId), {
+      data: data,
+    });
     console.log("Document written with ID: ", docRef.id);
   } catch (error) {
     console.error("Error adding document: ", error);
