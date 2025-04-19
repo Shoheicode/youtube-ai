@@ -46,4 +46,4 @@ async function addToDatabase(userId, data) {
 }
 
 
-export {app, database, auth,signInWithEmailAndPassword, signUpWithEmail,signOut, createUserWithEmailAndPassword};
+export {app, addToDatabase, auth,signInWithEmailAndPassword, signUpWithEmail,signOut, createUserWithEmailAndPassword};

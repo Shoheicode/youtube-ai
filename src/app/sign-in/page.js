@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { initializeApp } from 'firebase/app';
-import { auth,signInWithEmailAndPassword, signUpWithEmail } from '../firebase/firebase';
+import { addToDatabase, auth,signInWithEmailAndPassword, signUpWithEmail } from '../firebase/firebase';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -21,6 +21,7 @@ export default function LoginPage() {
   
       try {
         await signInWithEmailAndPassword(auth, email, password);
+        addToDatabase(auth.currentUser.uid, "HELLO");
         router.push('/'); // Redirect to dashboard after login
       } catch (err) {
         setError(err.message);
@@ -34,12 +35,6 @@ export default function LoginPage() {
       setError('');
       router.push("/sign-up");
   
-      // const { user, error } = await signUpWithEmail(email, password);
-      // if (error) {
-      //   setErrorMessage(error);  // Show user-friendly error message in UI
-      // } else {
-      //   router.push("/");        // Redirect on success
-      // }
     };
   
     return (
