@@ -11,12 +11,14 @@ import SignOutButton from '@/components/SignoutButton';
 import { addToDatabase } from '../firebase/firebase';
 import { getDataFromDatabase } from '../firebase/firebase';
 import { useAuth } from '../hook/useAuth';
+import { BookmarkIcon, HomeIcon } from '@heroicons/react/24/solid'; // Optional, if using Heroicons
 
 export default function SavedHighlights() {
   const [query, setQuery] = useState('');
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
+  const router = useRouter();
   const { user, loading: authLoading } = useAuth();
 
   useEffect(() => {
@@ -38,13 +40,33 @@ export default function SavedHighlights() {
     <div className="min-h-screen bg-gray-100">
       <nav>
         <div className="bg-blue-600 p-4">
-          {user ?(
-            <>
+        {user ?(
+            <div className="flex justify-around items-center">
+              <button
+                className="flex items-center gap-2 px-5 py-2 bg-blue-600 text-white rounded-lg font-medium shadow hover:bg-blue-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+                onClick={()=>router.push("/")}
+              >
+                <HomeIcon className="w-5 h-5" />
+                
+                Home
+              </button>
             <SignOutButton/>
-           </>
-          ): <>
+            <button className='flex items-center gap-2 px-5 py-2 bg-green-600 text-white rounded-lg font-medium shadow hover:bg-green-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-offset-2' onClick={()=>router.push("/saved-highlights")}>
+            <BookmarkIcon className="w-5 h-5" />
+             View Saved Sites
+             </button>
+           </div>
+          ):  <div className="flex justify-around items-center">
+          <button
+                className="flex items-center gap-2 px-5 py-2 bg-blue-600 text-white rounded-lg font-medium shadow hover:bg-blue-700 transition duration-200 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+                onClick={()=>router.push("/")}
+              >
+                <HomeIcon className="w-5 h-5" />
+                
+                Home
+              </button>
             <LoginButton/>
-          </>}
+          </div>}
         </div>
       </nav>
       <main className="container mx-auto px-4 py-8">
