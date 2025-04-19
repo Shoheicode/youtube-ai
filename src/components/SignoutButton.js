@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { signOut } from 'firebase/auth';
+import { auth } from '@/app/firebase/firebase';
 
 const SignOutButton = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,6 +14,7 @@ const SignOutButton = () => {
     // Simulate API call
     try {
       await new Promise((resolve) => setTimeout(resolve, 1500));
+      signOut(auth); // Sign out from Firebase
       router.push('/sign-in'); // Redirect to dashboard after login
       // Handle successful login here
       console.log('Login successful');
