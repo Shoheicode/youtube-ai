@@ -152,9 +152,9 @@ def upload_video():
                     )
             else:
                 video_url = f"https://www.youtube.com/watch?v={video_id}"
-                na = "audio" + str(i)
+                filepath = "audio" + str(i)
                 file_name = download_audio(
-                    video_url, output_path="downloads", filename=na
+                    video_url, output_path="downloads", filename=filepath
                 )
                 path = f"downloads/{file_name}.mp3"
                 transcript = audio_to_transcript_fast_whisper(path)
