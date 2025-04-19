@@ -16,8 +16,8 @@ def transcribe_file(audio_path):
     # Load model inside the worker to avoid shared memory issues
     model = WhisperModel(
         MODEL_SIZE,
-        device="cuda" if USE_GPU else "cpu",
-        compute_type="float16" if USE_GPU else "int8",
+        # device="cuda" if USE_GPU else "cpu",
+        # compute_type="float16" if USE_GPU else "int8",
     )
 
     segments, _ = model.transcribe(audio_path, beam_size=1)
