@@ -140,84 +140,89 @@ def upload_video():
             for item in filteredList
         ]
 
-        for item in filteredList:
-            # print("hi")
-            print(item)
-            video_id = item["id"]
-            # print("Hi")
-            # Check if video details were found
-            if not video_response["items"]:
-                print(f"No details found for video ID: {video_id}")
-                return jsonify({"error": "An unexpected error occurred"}), 500
+        args = [(info, name) for info in video_info_list]
 
-            # Get video details
-            video_details = item
-
-            # Process transcript and extract highlights
-            highlights = None
-
-            transcript_list = None
-
-            # If transcript_list is not None, process it
-            if transcript_list:
-                # Format transcript for OpenAI
-                formatted_transcript = format_transcript_for_analysis(transcript_list)
-                # print(formatted_transcript)
-
-                name = query.split(",")[
-                    0
-                ]  # Example name, replace with actual name from query
-
-                # Try to extract highlights with OpenAI
-                if OPEN_AI_KEY:
-                    highlights = extract_highlights_with_openai(
-                        formatted_transcript,
-                        name,  # Use just the name part
-                        num_highlights=5,
-                    )
-            else:
-                video_url = f"https://www.youtube.com/watch?v={video_id}"
-                filepath = "audio" + str(ct)
-                base_dir = os.path.dirname(__file__)
-                out_path = os.path.join(base_dir, "downloads", name)
-                file_name = download_audio(
-                    video_url, output_path=out_path, filename=filepath
-                )
-                path = f"downloads/{name}/{file_name}.mp3"
-                appearances.append(
-                    {
-                        "videoId": video_id,
-                        "title": video_details["snippet"]["title"],
-                        "channelTitle": video_details["snippet"]["channelTitle"],
-                        "publishedAt": video_details["snippet"]["publishedAt"],
-                        # "highlights": highlights,
-                    }
-                )
-                ct += 1
-        # print("APPEARANCES", appearances)
-        AUDIO_DIR = os.path.join(os.path.dirname(__file__), f"downloads/{name}/")
-        audio_files = [
-            os.path.join(AUDIO_DIR, f)
-            for f in os.listdir(AUDIO_DIR)
-            if f.endswith(".mp3") or f.endswith(".wav")
-        ]
-
-        print("POOL PARTY")
-        args = [(file, name) for file in audio_files]
         with Pool(processes=NUM_WORKERS) as pool:
             results = pool.starmap(transcribe_file, args)
 
-        print("RESULTS:")
-        for res in results:
-            print(res)
+        # for item in filteredList:
+        #     # print("hi")
+        #     print(item)
+        #     video_id = item["id"]
+        #     # print("Hi")
+        #     # Check if video details were found
+        #     if not video_response["items"]:
+        #         print(f"No details found for video ID: {video_id}")
+        #         return jsonify({"error": "An unexpected error occurred"}), 500
 
-        highlights = results
+        #     # Get video details
+        #     video_details = item
 
-        if not highlights:
-            highlights = []
+        #     # Process transcript and extract highlights
+        #     highlights = None
 
-        for i in range(len(appearances)):
-            appearances[i]["highlights"] = highlights[i]
+        #     transcript_list = None
+
+        #     # If transcript_list is not None, process it
+        #     if transcript_list:
+        #         # Format transcript for OpenAI
+        #         formatted_transcript = format_transcript_for_analysis(transcript_list)
+        #         # print(formatted_transcript)
+
+        #         name = query.split(",")[
+        #             0
+        #         ]  # Example name, replace with actual name from query
+
+        #         # Try to extract highlights with OpenAI
+        #         if OPEN_AI_KEY:
+        #             highlights = extract_highlights_with_openai(
+        #                 formatted_transcript,
+        #                 name,  # Use just the name part
+        #                 num_highlights=5,
+        #             )
+        #     else:
+        #         video_url = f"https://www.youtube.com/watch?v={video_id}"
+        #         filepath = "audio" + str(ct)
+        #         base_dir = os.path.dirname(__file__)
+        #         out_path = os.path.join(base_dir, "downloads", name)
+        #         file_name = download_audio(
+        #             video_url, output_path=out_path, filename=filepath
+        #         )
+        #         path = f"downloads/{name}/{file_name}.mp3"
+        #         appearances.append(
+        #             {
+        #                 "videoId": video_id,
+        #                 "title": video_details["snippet"]["title"],
+        #                 "channelTitle": video_details["snippet"]["channelTitle"],
+        #                 "publishedAt": video_details["snippet"]["publishedAt"],
+        #                 # "highlights": highlights,
+        #             }
+        #         )
+        #         ct += 1
+        # print("APPEARANCES", appearances)
+        # AUDIO_DIR = os.path.join(os.path.dirname(__file__), f"downloads/{name}/")
+        # audio_files = [
+        #     os.path.join(AUDIO_DIR, f)
+        #     for f in os.listdir(AUDIO_DIR)
+        #     if f.endswith(".mp3") or f.endswith(".wav")
+        # ]
+
+        # print("POOL PARTY")
+        # args = [(file, name) for file in audio_files]
+        # with Pool(processes=NUM_WORKERS) as pool:
+        #     results = pool.starmap(transcribe_file, args)
+
+        # print("RESULTS:")
+        # for res in results:
+        #     print(res)
+
+        # highlights = results
+
+        # if not highlights:
+        #     highlights = []
+
+        # for i in range(len(appearances)):
+        #     appearances[i]["highlights"] = highlights[i]
 
         base_dir = os.path.dirname(__file__)
         count_path = os.path.join(base_dir, "count.txt")
