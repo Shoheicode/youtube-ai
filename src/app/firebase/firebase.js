@@ -36,4 +36,4 @@ async function signUpWithEmail(email, password) {
   }
 }
 
-export {app, database, auth,signInWithEmailAndPassword, signUpWithEmail,signOut};
+export {app, database, auth,signInWithEmailAndPassword, signUpWithEmail,signOut, createUserWithEmailAndPassword};
