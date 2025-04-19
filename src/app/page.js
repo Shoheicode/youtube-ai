@@ -8,6 +8,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import LoginButton from '@/components/LoginButton';
 import { useAuth } from './hook/useAuth';
 import SignOutButton from '@/components/SignoutButton';
+import { addToDatabase } from './firebase/firebase';
 
 export default function Home() {
   const [query, setQuery] = useState('');
@@ -15,6 +16,7 @@ export default function Home() {
   const [results, setResults] = useState(null);
   const [error, setError] = useState('');
   const { user, loading: authLoading } = useAuth();
+  // const {user} = useAuth();
 
 
   const handleSubmit = async (e) => {
@@ -101,6 +103,7 @@ export default function Home() {
           {results && (
             <div className="mt-8">
               <h2 className="text-2xl font-semibold mb-4">Results for "{results.query}"</h2>
+              <button onClick={addToDatabase()}></button>
               
               {results.appearances.length > 0 ? (
                 <div className="space-y-6">

@@ -36,11 +36,13 @@ async function signUpWithEmail(email, password) {
   }
 }
 
-async function addToDatabase(userId, data) {
+async function addToDatabase(title, channelTitle, highlights){
   try {
     // const docRef = await database.collection("users").doc(userId).set(data);
-    setDoc(doc(database, "users", userId), {
-      data: data,
+    setDoc(doc(database, "users", auth.currentUser.uid), {
+      title: title,
+      channelTitle: channelTitle,
+      highlights: highlights,
     });
     // console.log("Document written with ID: ", docRef.id);
   } catch (error) {
