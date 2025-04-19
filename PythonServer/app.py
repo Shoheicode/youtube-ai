@@ -204,7 +204,7 @@ def upload_video():
             ]
 
             with Pool(processes=NUM_WORKERS) as pool:
-                results = pool.map(transcribe_file, audio_files)
+                results = pool.map(transcribe_file, audio_files, name)
 
             for res in results:
                 print(res)
