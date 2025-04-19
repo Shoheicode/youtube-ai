@@ -95,20 +95,20 @@ def upload_video():
         for item in video_response["items"]:
             video_id = item["id"]
             title = item["snippet"]["title"]
-            print(item)
+            # print(item)
             if "duration" not in item["contentDetails"]:
                 print("No duration found for video ID:", video_id)
                 continue
             duration = parse_duration(item["contentDetails"]["duration"])
-            print(duration)
-            print(duration.time)
+            # print(duration)
+            # print(duration.time)
             total_seconds = (
                 duration.time.minutes * 60
                 + duration.time.hours * 60 * 60
                 + duration.time.seconds
             )
 
-            print("DURATION", total_seconds, "TITLE", title)
+            # print("DURATION", total_seconds, "TITLE", title)
 
             if total_seconds <= 600 and re.search(
                 rf"\b{re.escape(name)}\b", title, re.IGNORECASE

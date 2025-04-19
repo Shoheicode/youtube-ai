@@ -15,6 +15,7 @@ NUM_WORKERS = cpu_count()  # Number of parallel processes
 
 # TRANSCRIBER FUNCTION
 def transcribe_file(video_info, name=""):
+    print("Transcribing video:", video_info["videoId"])
     video_id = video_info["videoId"]
     video_url = f"https://www.youtube.com/watch?v={video_id}"
     filepath = f"audio_{video_id}"
@@ -28,6 +29,8 @@ def transcribe_file(video_info, name=""):
 
     transcript = audio_to_transcript_fast_whisper(audio_path)
     highlights = extract_highlights_with_openai(transcript, name, num_highlights=5)
+
+    print("end")
 
     return {
         "videoId": video_id,
