@@ -128,14 +128,6 @@ def upload_video():
             # Get video details
             video_details = video_response["items"][0]
 
-            # Get video transcript
-            try:
-                transcript_list = None  # YouTubeTranscriptApi.get_transcript(video_id)
-            except Exception as e:
-                print(f"Error fetching transcript: {e}")
-                transcript_list = None
-                # return jsonify({"error": "An unexpected error occurred"}), 500
-
             # Process transcript and extract highlights
             highlights = None
 
