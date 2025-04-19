@@ -24,21 +24,21 @@ export default function LoginPage() {
 
         router.push("/"); // Redirect to homepage after successful signup
         } catch (error) {
-        console.error("Signup error:", error.code);
+        // console.error("Signup error:", error.code);
 
         switch (error.code) {
             case "auth/email-already-in-use":
-            setErrorMsg("An account with this email already exists.");
-            break;
+                setErrorMsg("An account with this email already exists.");
+                break;
             case "auth/invalid-email":
-            setErrorMsg("Please enter a valid email address.");
-            break;
+                setErrorMsg("Please enter a valid email address.");
+                break;
             case "auth/weak-password":
-            setErrorMsg("Password must be at least 6 characters.");
-            break;
+                setErrorMsg("Password must be at least 6 characters.");
+                break;
             default:
-            setErrorMsg("Something went wrong. Please try again.");
-            break;
+                setErrorMsg("Something went wrong. Please try again.");
+                break;
         }
         }
 
