@@ -6,38 +6,43 @@ import { initializeApp } from 'firebase/app';
 import { auth,signInWithEmailAndPassword, signUpWithEmail } from '../firebase/firebase';
 
 export default function LoginPage() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
     const router = useRouter();
-    // const {user} = useAuth();
-     
-    const handleLogin = async (e) => {
-      e.preventDefault();
-      setLoading(true);
-      setError('');
-  
-      try {
-        await signInWithEmailAndPassword(auth, email, password);
-        router.push('/'); // Redirect to dashboard after login
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [errorMsg, setErrorMsg] = useState("");
+    const [loading, setLoading] = useState(false);
+
     const handleSignUp = async (e) => {
-      e.preventDefault();
-      setLoading(true);
-      setError('');
-  
-      const { user, error } = await signUpWithEmail(email, password);
-      if (error) {
-        setErrorMessage(error);  // Show user-friendly error message in UI
-      } else {
-        router.push("");        // Redirect on success
-      }
+        e.preventDefault();
+        setLoading(true);
+        setErrorMsg("");
+
+        try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        console.log("Signed up as:", user.email);
+
+        router.push("/"); // Redirect to homepage after successful signup
+        } catch (error) {
+        console.error("Signup error:", error.code);
+
+        switch (error.code) {
+            case "auth/email-already-in-use":
+            setErrorMsg("An account with this email already exists.");
+            break;
+            case "auth/invalid-email":
+            setErrorMsg("Please enter a valid email address.");
+            break;
+            case "auth/weak-password":
+            setErrorMsg("Password must be at least 6 characters.");
+            break;
+            default:
+            setErrorMsg("Something went wrong. Please try again.");
+            break;
+        }
+        }
+
+        setLoading(false);
     };
   
     return (
