@@ -11,6 +11,7 @@ export default function LoginPage() {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    // const {user} = useAuth();
      
     const handleLogin = async (e) => {
       e.preventDefault();
@@ -19,7 +20,7 @@ export default function LoginPage() {
   
       try {
         await signInWithEmailAndPassword(auth, email, password);
-        router.push('/dashboard'); // Redirect to dashboard after login
+        router.push('/'); // Redirect to dashboard after login
       } catch (err) {
         setError(err.message);
       } finally {
