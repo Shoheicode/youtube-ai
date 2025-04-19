@@ -1,3 +1,4 @@
+from multiprocessing import Pool, cpu_count
 import random
 import re
 from flask import Flask, request, jsonify
@@ -12,6 +13,7 @@ import os
 
 import openai
 
+from multiprocessing_hanlder import transcribe_file
 from audio_to_transcript import audio_to_transcript_fast_whisper
 from yt_audio_extractor import download_audio
 from transcript_reader import (
@@ -26,6 +28,10 @@ if not YOUTUBE_API_KEY:
     raise ValueError("YOUTUBE_API_KEY environment variable not set.")
 OPEN_AI_KEY = os.getenv("OPENAI_API_KEY")
 openai.api_key = OPEN_AI_KEY
+AUDIO_DIR = "downloads"  # Folder with .mp3 or .wav files
+MODEL_SIZE = "base"  # tiny, base, small, medium, large
+USE_GPU = True  # Set to False to run on CPU
+NUM_WORKERS = cpu_count()  # Number of parallel processes
 
 app = Flask(__name__)
 CORS(app)  # Allow cross-origin requests from frontend
@@ -75,31 +81,52 @@ def upload_video():
             print("No videos found matching the search criteria.")
             return []
 
-        # filter videos for videos that are shorter than 10 mins
-        filtered_videos = []
-        for item in search_response["items"]:
+        video_ids = [item["id"]["videoId"] for item in search_response["items"]]
+
+        # Get video details (to extract exact duration)
+        video_response = (
+            youtube.videos()
+            .list(part="snippet,contentDetails", id=",".join(video_ids))
+            .execute()
+        )
+
+        # STEP 3: Filter videos by duration AND name in title
+        filteredList = []
+        for item in video_response["items"]:
+            video_id = item["id"]
+            title = item["snippet"]["title"]
             duration = parse_duration(
                 item["contentDetails"]["duration"]
             ).total_seconds()
-            print("DURATION", duration)
-            if duration <= 600:  # 600 seconds = 10 minutes
-                filtered_videos.append(
-                    {
-                        "title": item["snippet"]["title"],
-                        "videoId": item["id"],
-                        "duration_seconds": duration,
-                    }
-                )
 
-        # STEP 2: Get video details
-        items = search_response["items"]
-        filteredList = []
-        for item in items:
-            title = item["snippet"]["title"]
-            if re.search(rf"\b{re.escape(name)}\b", title, re.IGNORECASE):
+            print("DURATION", duration, "TITLE", title)
+
+            if duration <= 600 and re.search(
+                rf"\b{re.escape(name)}\b", title, re.IGNORECASE
+            ):
                 filteredList.append(item)
-            if len(filteredList) >= 5:
-                break
+                if len(filteredList) >= 5:
+                    break
+
+        # # filter videos for videos that are shorter than 10 mins
+        # filtered_videos = []
+        # for item in video_response["items"]:
+        #     duration = parse_duration(
+        #         item["contentDetails"]["duration"]
+        #     ).total_seconds()
+        #     print("DURATION", duration)
+        #     if duration <= 600:  # 600 seconds = 10 minutes
+        #         filtered_videos.append(item)
+
+        # # STEP 2: Get video details
+        # items = search_response["items"]
+        # filteredList = []
+        # for item in items:
+        #     title = item["snippet"]["title"]
+        #     if re.search(rf"\b{re.escape(name)}\b", title, re.IGNORECASE):
+        #         filteredList.append(item)
+        #     if len(filteredList) >= 5:
+        #         break
 
         if not filteredList:
             print("No videos found matching the name in the title.")
@@ -156,15 +183,29 @@ def upload_video():
                 file_name = download_audio(
                     video_url, output_path="downloads", filename=filepath
                 )
-                path = f"downloads/{file_name}.mp3"
-                transcript = audio_to_transcript_fast_whisper(path)
-                # print(transcript)
-                if OPEN_AI_KEY:
-                    highlights = extract_highlights_with_openai(
-                        transcript,
-                        name,  # Use just the name part
-                        num_highlights=5,
-                    )
+                path = f"downloads/{name}/{file_name}.mp3"
+                # transcript = audio_to_transcript_fast_whisper(path)
+                # # print(transcript)
+                # if OPEN_AI_KEY:
+                #     highlights = extract_highlights_with_openai(
+                #         transcript,
+                #         name,  # Use just the name part
+                #         num_highlights=5,
+                #     )
+            AUDIO_DIR = os.path.join(os.path.dirname(__file__), "downloads")
+            audio_files = [
+                os.path.join(AUDIO_DIR, f)
+                for f in os.listdir(AUDIO_DIR)
+                if f.endswith(".mp3") or f.endswith(".wav")
+            ]
+
+            with Pool(processes=NUM_WORKERS) as pool:
+                results = pool.map(transcribe_file, audio_files)
+
+            for res in results:
+                print(res)
+
+            highlights = results
 
             if not highlights:
                 highlights = []
