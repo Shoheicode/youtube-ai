@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { initializeApp } from 'firebase/app';
-import { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from '../firebase/firebase';
+import { auth,signInWithEmailAndPassword, signUpWithEmail } from '../firebase/firebase';
 
 export default function LoginPage() {
     const [email, setEmail] = useState('');
@@ -33,7 +33,7 @@ export default function LoginPage() {
       setError('');
   
       try {
-        await createUserWithEmailAndPassword(auth, email, password);
+        await signUpWithEmail(email, password);
         router.push('/'); // Redirect to dashboard after login
       } catch (err) {
         setError(err.message);
