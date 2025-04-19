@@ -42,7 +42,7 @@ async function addToDatabase(userId, data) {
     setDoc(doc(database, "users", userId), {
       data: data,
     });
-    console.log("Document written with ID: ", docRef.id);
+    // console.log("Document written with ID: ", docRef.id);
   } catch (error) {
     console.error("Error adding document: ", error);
   }
