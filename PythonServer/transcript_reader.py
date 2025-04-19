@@ -35,7 +35,7 @@ def extract_highlights_with_openai(transcript_text, person_name, num_highlights=
 
         prompt = f"""
         The following is a transcript from a video featuring {person_name}.
-        Identify exactly {num_highlights} key moments from this transcript that includes this only person. Make sure to include their name in the summary. 
+        Identify exactly {num_highlights} key moments from this transcript that includes this only person. IMPORTANT: Make sure to include their name in the summary. 
         
         For each highlight:
         1. Find an important statement or discussion point
