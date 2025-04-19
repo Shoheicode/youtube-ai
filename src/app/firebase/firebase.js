@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,signOut } from "firebase/auth";
-import { getFirestore, setDoc, doc } from 'firebase/firestore';
+import { getFirestore, setDoc, doc, collection } from 'firebase/firestore';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -44,16 +44,17 @@ async function addToDatabase(title, channelTitle, highlights){
       console.error("User not logged in");
       return;
     }
-    const appearancesRef = collection(db, "users", uid, "appearances");
+    console.log("User ID:", title);
+    const appearancesRef = doc(database, "users", uid, "appearances", title);
     // const docRef = await database.collection("users").doc(userId).set(data);
-    const docRef = await addDoc(appearancesRef, {
-      title: appearance.title,
-      channelTitle: appearance.channelTitle,
-      highlights: appearance.highlights,
+    await setDoc(appearancesRef, {
+      title: title,
+      channelTitle: channelTitle,
+      highlights: highlights,
       createdAt: new Date()
     });
 
-    console.log("Document written with ID:", docRef.id);
+    // console.log("Document written with ID:", docRef.id);
     // console.log("Document written with ID: ", docRef.id);
   } catch (error) {
     console.error("Error adding document: ", error);
