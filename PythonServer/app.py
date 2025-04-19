@@ -142,13 +142,13 @@ def upload_video():
             return jsonify({"error": "An unexpected error occurred"}), 500
 
         # STEP 3: Get video details and transcript
-        i = 0
+        ct = 0
         base_dir = os.path.dirname(__file__)
         count_path = os.path.join(base_dir, "count.txt")
 
         with open(count_path, "r") as file:
-            i = int(file.read().strip())
-        print("I", i)
+            ct = int(file.read().strip())
+        print("I", ct)
         for item in filteredList:
             # print("hi")
             print(item)
@@ -186,7 +186,7 @@ def upload_video():
                     )
             else:
                 video_url = f"https://www.youtube.com/watch?v={video_id}"
-                filepath = "audio" + str(i)
+                filepath = "audio" + str(ct)
                 base_dir = os.path.dirname(__file__)
                 out_path = os.path.join(base_dir, "downloads", name)
                 file_name = download_audio(
@@ -202,7 +202,7 @@ def upload_video():
                         # "highlights": highlights,
                     }
                 )
-                i += 1
+                ct += 1
         print("APPEARANCES", appearances)
         AUDIO_DIR = os.path.join(os.path.dirname(__file__), f"downloads/{name}/")
         audio_files = [
@@ -232,7 +232,7 @@ def upload_video():
         count_path = os.path.join(base_dir, "count.txt")
 
         with open(count_path, "w") as file:
-            file.write(str(i))
+            file.write(str(ct))
         return jsonify({"query": query, "appearances": appearances})
     except HttpError as e:
         print("An error occurred:", e)
