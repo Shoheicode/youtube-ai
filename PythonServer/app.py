@@ -95,7 +95,12 @@ def upload_video():
         for item in video_response["items"]:
             video_id = item["id"]
             title = item["snippet"]["title"]
+            print(item)
+            if "duration" not in item["contentDetails"]:
+                print("No duration found for video ID:", video_id)
+                continue
             duration = parse_duration(item["contentDetails"]["duration"])
+            print(duration)
             print(duration.time)
             total_seconds = (
                 duration.time.minutes * 60
@@ -148,14 +153,6 @@ def upload_video():
             # print("hi")
             print(item)
             video_id = item["id"]
-            # video_response = (
-            #     youtube.videos()
-            #     .list(
-            #         part="snippet,contentDetails,statistics",
-            #         id=video_id,
-            #     )
-            #     .execute()
-            # )
             print("Hi")
             # Check if video details were found
             if not video_response["items"]:
@@ -163,7 +160,7 @@ def upload_video():
                 return jsonify({"error": "An unexpected error occurred"}), 500
 
             # Get video details
-            video_details = video_response["items"][0]
+            video_details = item
 
             # Process transcript and extract highlights
             highlights = None
@@ -231,7 +228,10 @@ def upload_video():
         for i in range(len(appearances)):
             appearances[i]["highlights"] = highlights[i]
 
-        with open("count.txt", "w") as file:
+        base_dir = os.path.dirname(__file__)
+        count_path = os.path.join(base_dir, "count.txt")
+
+        with open(count_path, "w") as file:
             file.write(str(i))
         return jsonify({"query": query, "appearances": appearances})
     except HttpError as e:
