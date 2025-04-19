@@ -25,8 +25,10 @@ import openai
 
 
 def extract_highlights_with_openai(transcript_text, person_name, num_highlights=5):
+    load_dotenv()
     OPEN_AI_KEY = os.getenv("OPENAI_API_KEY")
     openai.api_key = OPEN_AI_KEY
+    print(OPEN_AI_KEY)
     try:
         # Limit transcript length to avoid token limits
         truncated_transcript = (
